@@ -1,0 +1,15 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+
+# 디자인 목업 — git 추적 불필요
+.github/design/
+
+# 환경변수
+.env
+.env.*
+!.env.example
