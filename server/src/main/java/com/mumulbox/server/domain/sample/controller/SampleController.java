@@ -3,6 +3,7 @@ package com.mumulbox.server.domain.sample.controller;
 import com.mumulbox.server.domain.sample.dto.SampleRequest;
 import com.mumulbox.server.domain.sample.dto.SampleResponse;
 import com.mumulbox.server.domain.sample.service.SampleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class SampleController {
 
     // 1. 데이터 등록 엔드포인트
     @PostMapping
-    public ResponseEntity<Long> create(@RequestBody SampleRequest request) {
+    public ResponseEntity<Long> create(@Valid @RequestBody SampleRequest request) {
         Long createdId = sampleService.createSample(request);
         return ResponseEntity.ok(createdId);
     }

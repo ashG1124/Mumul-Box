@@ -2,6 +2,8 @@ package com.mumulbox.server.domain.sample.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,7 +22,9 @@ public class SampleEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @CreationTimestamp //
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     @Builder // 엔티티 생성을 안전하게 하기 위한 빌더 패턴
     public SampleEntity(String title, String content) {
