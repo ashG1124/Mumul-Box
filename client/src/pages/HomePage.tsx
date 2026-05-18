@@ -4,5 +4,5 @@ export default function HomePage() {
     <main>
       <h1 className="text-2xl font-bold">MuMul Box</h1>
     </main>
-  )
+  );
 }
