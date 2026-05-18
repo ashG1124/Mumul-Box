@@ -1,18 +1,20 @@
-import React from 'react'
-import { Avatar } from './Avatar'
+import React from 'react';
+import { Avatar } from './Avatar';
+import { Button } from './Button';
 
 interface GnbProps {
   isLoggedIn?: boolean;
+  className?: string;
 }
 
-export const Gnb: React.FC<GnbProps> = ({ isLoggedIn = false }) => {
+export const Gnb: React.FC<GnbProps> = ({ isLoggedIn = false, className = '' }) => {
   return (
     /* ============================================================
        GNB 전체 벨트
        ============================================================ */
-    <header className="h-[80px] bg-white/70 backdrop-blur-[20px] border-b border-[#F0F0F4] sticky top-0 z-50 w-full min-w-[1440px]">
+    <header className={`h-[80px] bg-white/70 backdrop-blur-[20px] border-b border-[#F0F0F4] sticky top-0 z-50 w-full min-w-[1440px] ${className}`}>
       
-      {/* .gnb-inner: 최대 너비 1280px, 정중앙 정렬(mx-auto), 양옆 패딩 32px */}
+      {/* .gnb-inner: 최대 너비 1280px, 정중앙 정렬, 양옆 패딩 32px */}
       <div className="max-w-[1280px] mx-auto h-full flex items-center gap-[24px] px-[32px]">
         
         {/* .logo: 로고 아이콘 + 서비스 이름 */}
@@ -45,7 +47,7 @@ export const Gnb: React.FC<GnbProps> = ({ isLoggedIn = false }) => {
           />
         </div>
 
-        {/* .gnb-spacer: 중간 공간을 밀어내서 우측 정렬을 만드는 여백 주머니 */}
+        {/* .gnb-spacer: 중간 공간을 밀어내서 우측 정렬을 만드는 여백 */}
         <div className="flex-1" />
 
         {/* .gnb-actions: 가로 정렬 바구니 */}
@@ -56,15 +58,20 @@ export const Gnb: React.FC<GnbProps> = ({ isLoggedIn = false }) => {
                ============================================================ */
             <div className="flex items-center gap-[12px]">
               {/* 내 질문함 */}
-              <a href="#" className="inline-flex items-center gap-[8px] h-[42px] px-[18px] rounded-full text-[14px] font-bold border border-[#E5E5EC] text-[#2A2A38] transition-colors duration-150 ease-in-out hover:border-[#8E78FF] hover:text-[#6D5BFF]">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="w-[16px] h-[16px]">
-                  <path d="M22 12h-6l-2 3h-4l-2-3H2"/>
-                  <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
-                </svg>
-                <span>내 질문함</span>
-                <span className="inline-flex items-center justify-center min-w-[20px] h-[20px] px-[6px] rounded-full bg-gradient-to-br from-[#A07BF9] to-[#6E4FEA] text-white text-[11px] font-extrabold leading-none">
-                  3
-                </span>
+              <a href="#">
+                <Button 
+                  variant="outline" 
+                  className="h-[42px] px-[18px] rounded-full text-[14px] font-bold border border-[#E5E5EC] text-[#2A2A38] gap-[8px]"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" className="w-[16px] h-[16px]">
+                    <path d="M22 12h-6l-2 3h-4l-2-3H2"/>
+                    <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+                  </svg>
+                  <span>내 질문함</span>
+                  <span className="inline-flex items-center justify-center min-w-[20px] h-[20px] px-[6px] rounded-full bg-gradient-to-br from-[#A07BF9] to-[#6E4FEA] text-white text-[11px] font-extrabold leading-none">
+                    3
+                  </span>
+                </Button>
               </a>
 
               {/* 알림 버튼 */}
@@ -93,13 +100,23 @@ export const Gnb: React.FC<GnbProps> = ({ isLoggedIn = false }) => {
             <div className="flex items-center gap-[10px]">
               
               {/* 1. 로그인 버튼 (.btn-ghost 스펙 그대로) */}
-              <a href="#" className="inline-flex items-center justify-center h-[42px] px-[20px] rounded-full bg-transparent text-[#2A2A38] text-[14px] font-bold border border-[#E5E5EC] transition-colors duration-150 ease-in-out hover:border-[#8E78FF] hover:text-[#6D5BFF]">
-                로그인
+              <a href="#">
+                <Button 
+                  variant="outline" 
+                  className="h-[42px] px-[20px] rounded-full text-[14px] font-bold border border-[#E5E5EC] text-[#2A2A38]"
+                >
+                  로그인
+                </Button>
               </a>
 
               {/* 2. 회원가입 버튼 (.btn-primary 스펙 그대로) */}
-              <a href="#" className="inline-flex items-center justify-center gap-[8px] h-[42px] px-[22px] rounded-full bg-gradient-to-br from-[#A07BF9] to-[#6E4FEA] text-white text-[14px] font-bold transition-transform duration-150 ease-in-out hover:-translate-y-[1px] shadow-sm">
-                회원가입
+              <a href="#">
+                <Button 
+                  variant="primary" 
+                  className="h-[42px] px-[22px] rounded-full bg-gradient-to-br from-[#A07BF9] to-[#6E4FEA] text-white text-[14px] font-bold shadow-sm hover:translate-y-0"
+                >
+                  회원가입
+                </Button>
               </a>
 
             </div>

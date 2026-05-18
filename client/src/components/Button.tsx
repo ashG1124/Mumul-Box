@@ -1,18 +1,19 @@
 import React from 'react';
 
 // 1. 외부에서 조종할 수 있는 옵션(Props) 정의.
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  variant?: 'primary' | 'outline' | 'dark' | 'ghost'; // 4가지 디자인 스타일
-  size?: 'sm' | 'md' | 'lg'; // 3가지 크기 스케일
+  variant?: 'primary' | 'outline' | 'dark' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
 }
 
 export const Button: React.FC<ButtonProps> = ({ 
   children, 
-  variant = 'primary', // 기본값은 보라색 메인 버튼
-  size = 'md'          // 기본값은 중간 크기 (44px)
-}) => {
-  
+  variant = 'primary', 
+  size = 'md',
+  className = '',
+  ...props
+}) => {  
   // 2. 글자 두께, 정렬, 마우스 커서, 애니메이션 등 모든 버튼이 공유하는 기본 뼈대 스타일.
   const baseStyle = "font-semibold inline-flex items-center justify-center gap-[8px] cursor-pointer transition-all duration-150 ease-out select-none";
 
@@ -40,7 +41,10 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     /* 5. 공통 스타일, 선택된 크기 스타일, 선택된 종류 스타일을 실시간으로 조립해서 그려줌. */
-    <button className={`${baseStyle} ${sizeStyles[size]} ${variantStyles[variant]}`}>
+    <button 
+      className={`${baseStyle} ${sizeStyles[size]} ${variantStyles[variant]}${className}`}
+      {...props}
+    >
       {children}
     </button>
   );
