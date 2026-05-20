@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.14'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'org.springdoc.openapi-gradle-plugin' version '1.9.0'
 }
 
 group = 'com.mumulbox'
@@ -22,6 +23,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0' // swagger
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.mysql:mysql-connector-j'
@@ -35,4 +37,15 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+openApi {
+	// 1. 추출할 API 문서의 주소 (yaml 형태로 받아오기 위함)
+	apiDocsUrl.set("http://localhost:8080/v3/api-docs.yaml")
+
+	// 2. 저장할 위치: server 폴더의 상위 폴더(..)에 있는 shared 폴더로 지정
+	outputDir.set(file("../shared"))
+
+	// 3. 저장할 파일 이름
+	outputFileName.set("Swagger.yaml")
 }
