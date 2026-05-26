@@ -3,6 +3,7 @@ package com.mumulbox.server.domain.user.controller;
 import com.mumulbox.server.domain.user.dto.AuthResponse;
 import com.mumulbox.server.domain.user.dto.LoginRequest;
 import com.mumulbox.server.domain.user.dto.SignUpRequest;
+import com.mumulbox.server.domain.user.dto.SignUpResponse;
 import com.mumulbox.server.domain.user.service.AuthService;
 import com.mumulbox.server.global.response.ApiResponse;
 import jakarta.validation.Valid;
@@ -15,29 +16,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
-public class AuthController {
+public class UserController {
 
     private final AuthService authService;
 
     /**
      * 회원가입
-     * POST /api/v1/auth/signup
+     * POST /api/v1/users/signup
      */
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<AuthResponse>> signUp(
+    public ResponseEntity<ApiResponse<SignUpResponse>> signUp(
             @Valid @RequestBody SignUpRequest request
     ) {
-        AuthResponse response = authService.signUp(request);
+        SignUpResponse response = authService.signUp(request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(ApiResponse.success("회원가입이 완료되었습니다.", response));
+                .body(ApiResponse.created("회원가입이 완료되었습니다.", response));
     }
 
     /**
      * 로그인
-     * POST /api/v1/auth/login
+     * POST /api/v1/users/login
      */
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<AuthResponse>> login(
@@ -45,6 +46,6 @@ public class AuthController {
     ) {
         AuthResponse response = authService.login(request);
         return ResponseEntity
-                .ok(ApiResponse.success("로그인되었습니다.", response));
+                .ok(ApiResponse.ok("로그인되었습니다.", response));
     }
 }

@@ -2,7 +2,7 @@ package com.mumulbox.server.global.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mumulbox.server.global.exception.ErrorCode;
-import com.mumulbox.server.global.response.ApiResponse;
+import com.mumulbox.server.global.response.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +33,8 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
 
-        ApiResponse<Void> errorResponse = ApiResponse.error(
-                ErrorCode.UNAUTHORIZED.getCode(),
+        ErrorResponse errorResponse = ErrorResponse.of(
+                ErrorCode.UNAUTHORIZED.name(),
                 ErrorCode.UNAUTHORIZED.getMessage()
         );
 

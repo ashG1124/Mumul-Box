@@ -1,6 +1,6 @@
 package com.mumulbox.server.global.exception;
 
-import com.mumulbox.server.global.response.ApiResponse;
+import com.mumulbox.server.global.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -16,17 +16,17 @@ public class GlobalExceptionHandler {
 
     // 커스텀 예외 처리
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ApiResponse<Void>> handleCustomException(CustomException e) {
+    public ResponseEntity<ErrorResponse> handleCustomException(CustomException e) {
         log.error("CustomException: {}", e.getMessage());
         ErrorCode errorCode = e.getErrorCode();
         return ResponseEntity
                 .status(errorCode.getHttpStatus())
-                .body(ApiResponse.error(errorCode.getCode(), e.getMessage()));
+                .body(ErrorResponse.of(errorCode.name(), e.getMessage()));
     }
 
     // @Valid 검증 실패 예외 처리
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiResponse<Void>> handleValidationException(MethodArgumentNotValidException e) {
+    public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException e) {
         String errorMessage = e.getBindingResult().getFieldErrors().stream()
                 .map(FieldError::getDefaultMessage)
                 .collect(Collectors.joining(", "));
@@ -34,17 +34,17 @@ public class GlobalExceptionHandler {
         log.error("Validation Exception: {}", errorMessage);
         return ResponseEntity
                 .status(ErrorCode.INVALID_INPUT_VALUE.getHttpStatus())
-                .body(ApiResponse.error(ErrorCode.INVALID_INPUT_VALUE.getCode(), errorMessage));
+                .body(ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE.name(), errorMessage));
     }
 
     // 그 외 모든 예외 처리
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<Void>> handleException(Exception e) {
+    public ResponseEntity<ErrorResponse> handleException(Exception e) {
         log.error("Unexpected Exception: ", e);
         return ResponseEntity
                 .status(ErrorCode.INTERNAL_SERVER_ERROR.getHttpStatus())
-                .body(ApiResponse.error(
-                        ErrorCode.INTERNAL_SERVER_ERROR.getCode(),
+                .body(ErrorResponse.of(
+                        ErrorCode.INTERNAL_SERVER_ERROR.name(),
                         ErrorCode.INTERNAL_SERVER_ERROR.getMessage()
                 ));
     }

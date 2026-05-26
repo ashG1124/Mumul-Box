@@ -9,28 +9,27 @@ import lombok.Getter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse<T> {
 
-    private boolean success;
-    private String message;
-    private T data;
-    private String errorCode;
+    private final int code;
+    private final String message;
+    private final T data;
 
-    // 성공 응답 (데이터 있음)
-    public static <T> ApiResponse<T> success(T data) {
-        return new ApiResponse<>(true, "요청이 성공적으로 처리되었습니다.", data, null);
+    // 성공 응답 (데이터 O)
+    public static <T> ApiResponse<T> success(int code, String message, T data) {
+        return new ApiResponse<>(code, message, data);
     }
 
-    // 성공 응답 (메시지 + 데이터)
-    public static <T> ApiResponse<T> success(String message, T data) {
-        return new ApiResponse<>(true, message, data, null);
+    // 성공 응답 (데이터 X)
+    public static <T> ApiResponse<T> success(int code, String message) {
+        return new ApiResponse<>(code, message, null);
     }
 
-    // 성공 응답 (메시지만)
-    public static <T> ApiResponse<T> success(String message) {
-        return new ApiResponse<>(true, message, null, null);
+    // 200 OK 기본 성공 응답
+    public static <T> ApiResponse<T> ok(String message, T data) {
+        return new ApiResponse<>(200, message, data);
     }
 
-    // 실패 응답
-    public static <T> ApiResponse<T> error(String errorCode, String message) {
-        return new ApiResponse<>(false, message, null, errorCode);
+    // 201 Created 기본 성공 응답
+    public static <T> ApiResponse<T> created(String message, T data) {
+        return new ApiResponse<>(201, message, data);
     }
 }

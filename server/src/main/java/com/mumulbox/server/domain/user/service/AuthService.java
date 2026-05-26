@@ -3,6 +3,7 @@ package com.mumulbox.server.domain.user.service;
 import com.mumulbox.server.domain.user.dto.AuthResponse;
 import com.mumulbox.server.domain.user.dto.LoginRequest;
 import com.mumulbox.server.domain.user.dto.SignUpRequest;
+import com.mumulbox.server.domain.user.dto.SignUpResponse;
 import com.mumulbox.server.domain.user.entity.User;
 import com.mumulbox.server.domain.user.repository.UserRepository;
 import com.mumulbox.server.global.exception.CustomException;
@@ -30,7 +31,7 @@ public class AuthService {
      * 회원가입
      */
     @Transactional
-    public AuthResponse signUp(SignUpRequest request) {
+    public SignUpResponse signUp(SignUpRequest request) {
         // 1. 이메일 중복 확인
         if (userRepository.existsByUserId(request.getEmail())) {
             throw new CustomException(ErrorCode.EMAIL_ALREADY_EXISTS);
@@ -59,10 +60,8 @@ public class AuthService {
         userRepository.save(user);
         log.info("회원가입 성공: {}", user.getUserId());
 
-        // 6. JWT 토큰 발급
-        String accessToken = jwtTokenProvider.createToken(user.getUserId(), user.getRole().name());
-
-        return AuthResponse.of(accessToken, user.getUserId(), user.getNickname());
+        // 6. 응답 반환 (명세 형식에 맞춰 userID는 dummy 값 1L 사용)
+        return SignUpResponse.of(1L, user.getEmail());
     }
 
     /**
