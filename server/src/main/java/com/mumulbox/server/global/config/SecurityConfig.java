@@ -53,7 +53,6 @@ public class SecurityConfig {
 
                 // 요청별 권한 설정
                 .authorizeHttpRequests(auth -> auth
-                        // ✅ Swagger UI (개발 편의 - 운영 시 제거 또는 IP 제한 권장)
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
@@ -62,10 +61,16 @@ public class SecurityConfig {
                         ).permitAll()
 
                         // 비로그인 접근 가능 API
-                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
+                        // 회원가입 / 로그인
+                        .requestMatchers(HttpMethod.POST, "/api/v1/users/signup").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/users/login").permitAll()
+
+                        // 유저 검색 / 프로필 / 답변 조회
                         .requestMatchers(HttpMethod.GET, "/api/v1/users/search").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/users/*/profile").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/users/*/answers").permitAll()
+
+                        // 피드 / 질문 조회
                         .requestMatchers(HttpMethod.GET, "/api/v1/feeds/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/questions/**").permitAll()
 
