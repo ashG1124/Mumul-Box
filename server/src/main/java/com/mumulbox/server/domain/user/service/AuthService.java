@@ -60,8 +60,8 @@ public class AuthService {
         userRepository.save(user);
         log.info("회원가입 성공: {}", user.getUserId());
 
-        // 6. 응답 반환 (명세 형식에 맞춰 userID는 dummy 값 1L 사용)
-        return SignUpResponse.of(1L, user.getEmail());
+        // 6. 응답 반환 (userId는 이메일)
+        return SignUpResponse.of(user.getUserId(), user.getEmail());
     }
 
     /**
