@@ -5,6 +5,7 @@ import com.mumulbox.server.domain.user.dto.LoginRequest;
 import com.mumulbox.server.domain.user.dto.MyInfoResponse;
 import com.mumulbox.server.domain.user.dto.ProfileUpdateRequest;
 import com.mumulbox.server.domain.user.dto.ProfileUpdateResponse;
+import com.mumulbox.server.domain.user.dto.ShareLinkResponse;
 import com.mumulbox.server.domain.user.dto.SignUpRequest;
 import com.mumulbox.server.domain.user.dto.SignUpResponse;
 import com.mumulbox.server.domain.user.service.AuthService;
@@ -83,5 +84,31 @@ public class UserController {
         ProfileUpdateResponse response = userService.updateProfile(principal.getUsername(), request);
         return ResponseEntity
                 .ok(ApiResponse.ok("프로필이 수정되었습니다.", response));
+    }
+
+    /**
+     * 공유 링크 조회
+     * GET /api/v1/me/share-link
+     */
+    @GetMapping("/me/share-link")
+    public ResponseEntity<ApiResponse<ShareLinkResponse>> getShareLink(
+            @AuthenticationPrincipal User principal
+    ) {
+        ShareLinkResponse response = userService.getShareLink(principal.getUsername());
+        return ResponseEntity
+                .ok(ApiResponse.ok("공유 링크를 조회했습니다.", response));
+    }
+
+    /**
+     * 공유 링크 재발급
+     * POST /api/v1/me/share-link/regenerate
+     */
+    @PostMapping("/me/share-link/regenerate")
+    public ResponseEntity<ApiResponse<ShareLinkResponse>> regenerateShareLink(
+            @AuthenticationPrincipal User principal
+    ) {
+        ShareLinkResponse response = userService.regenerateShareLink(principal.getUsername());
+        return ResponseEntity
+                .ok(ApiResponse.ok("공유 링크가 재발급되었습니다.", response));
     }
 }

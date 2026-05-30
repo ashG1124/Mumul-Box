@@ -3,6 +3,7 @@ package com.mumulbox.server.domain.user.service;
 import com.mumulbox.server.domain.user.dto.MyInfoResponse;
 import com.mumulbox.server.domain.user.dto.ProfileUpdateRequest;
 import com.mumulbox.server.domain.user.dto.ProfileUpdateResponse;
+import com.mumulbox.server.domain.user.dto.ShareLinkResponse;
 import com.mumulbox.server.domain.user.entity.User;
 import com.mumulbox.server.domain.user.repository.UserRepository;
 import com.mumulbox.server.global.exception.CustomException;
@@ -12,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -78,5 +81,36 @@ public class UserService {
                 user.getProfileImg(),
                 user.getUpdatedAt()
         );
+    }
+
+    /**
+     * 공유 링크 조회
+     */
+    public ShareLinkResponse getShareLink(String userId) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        String shareUrl = shareBaseUrl + "/" + user.getShareToken();
+
+        return ShareLinkResponse.of(user.getUserId(), shareUrl);
+    }
+
+    /**
+     * 공유 링크 재발급
+     */
+    @Transactional
+    public ShareLinkResponse regenerateShareLink(String userId) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        // 새 토큰 생성 및 갱신
+        String newShareToken = UUID.randomUUID().toString().replace("-", "");
+        user.updateShareToken(newShareToken);
+
+        log.info("공유 링크 재발급 완료: {}", userId);
+
+        String shareUrl = shareBaseUrl + "/" + newShareToken;
+
+        return ShareLinkResponse.of(user.getUserId(), shareUrl);
     }
 }
