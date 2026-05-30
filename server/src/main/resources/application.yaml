@@ -22,3 +22,6 @@ server:
 jwt:
   secret: ${JWT_SECRET:mumulbox-very-long-secret-key-for-development-only-min-256-bits-required}
   expiration: ${JWT_EXPIRATION:86400000}  # 24시간 (밀리초)
+
+app:
+  share-base-url: ${SHARE_BASE_URL:http://localhost:3000/q}
