@@ -4,25 +4,84 @@
 
 ## 기술 스택
 
-| 항목 | 버전 |
-|---|---|
-| React | 19 |
-| Vite | 8 |
-| TypeScript | 6 |
-| Tailwind CSS | 4 |
-| React Router | 7 |
+| 항목          | 버전 |
+| ------------- | ---- |
+| React         | 19   |
+| Vite          | 8    |
+| TypeScript    | 6    |
+| Tailwind CSS  | 4    |
+| React Router  | 7    |
 | 패키지 매니저 | pnpm |
 
 ## 코드 품질 도구
 
-| 도구 | 역할 |
-|---|---|
-| ESLint | 코드 정적 분석 |
-| Prettier | 코드 포맷 통일 |
-| Husky | Git 훅 관리 |
+| 도구        | 역할                     |
+| ----------- | ------------------------ |
+| ESLint      | 코드 정적 분석           |
+| Prettier    | 코드 포맷 통일           |
+| Husky       | Git 훅 관리              |
 | lint-staged | 커밋 시 변경 파일만 검사 |
 
-커밋할 때마다 `pre-commit` 훅이 자동으로 ESLint + Prettier를 실행합니다.
+### 스크립트 alias
+
+자주 쓰는 작업은 아래 alias로 바로 실행할 수 있습니다.
+
+| 명령어              | 동작                                 |
+| ------------------- | ------------------------------------ |
+| `pnpm lint`         | ESLint 검사                          |
+| `pnpm lint:fix`     | ESLint 검사 + 자동 수정              |
+| `pnpm format`       | Prettier 포맷 전체 적용              |
+| `pnpm format:check` | Prettier 포맷 검사만 (수정 없음)     |
+| `pnpm check`        | `lint` + `format:check` 한 번에 실행 |
+
+### ESLint — 정적 분석
+
+```bash
+pnpm lint        # 검사
+pnpm lint:fix    # 검사 + 자동 수정
+```
+
+규칙은 `eslint.config.js`에서 관리합니다.  
+`eslint-config-prettier`가 마지막에 적용되어 Prettier와 충돌하는 ESLint 포맷 규칙은 자동으로 비활성화됩니다.
+
+### Prettier — 코드 포맷
+
+```bash
+pnpm format        # 전체 파일 포맷 적용 (파일 직접 수정)
+pnpm format:check  # 포맷 검사만, 파일은 건드리지 않음
+```
+
+`format:check`는 파일을 수정하지 않고 **포맷이 규칙대로 되어 있는지만 검사**합니다.  
+포맷이 맞지 않으면 어떤 파일이 문제인지 출력하고 종료 코드 1을 반환합니다.  
+로컬에서는 `pnpm format`으로 바로 고치면 되고, `format:check`는 주로 CI에서 사용합니다.
+
+포맷 규칙은 `.prettierrc`에서 관리합니다. 주요 설정은 아래와 같습니다.
+
+| 항목          | 값               |
+| ------------- | ---------------- |
+| 최대 줄 길이  | 80               |
+| 들여쓰기      | 스페이스 2칸     |
+| 세미콜론      | 사용             |
+| 문자열 따옴표 | 작은따옴표 (`'`) |
+| JSX 따옴표    | 큰따옴표 (`"`)   |
+| 후행 쉼표     | 모든 위치        |
+| 줄 끝         | LF               |
+
+### Husky + lint-staged — Git 훅
+
+`pnpm install` 시 `prepare` 스크립트가 자동으로 Husky를 초기화합니다.  
+커밋할 때마다 `pre-commit` 훅이 **스테이징된 파일에 한해** 아래 작업을 자동 실행합니다.
+
+| 대상                      | 실행 명령                           |
+| ------------------------- | ----------------------------------- |
+| `*.ts`, `*.tsx`           | `eslint --fix` → `prettier --write` |
+| `*.json`, `*.css`, `*.md` | `prettier --write`                  |
+
+훅 설정 파일: `.husky/pre-commit`  
+lint-staged 설정: `package.json`의 `"lint-staged"` 항목
+
+> 훅을 임시로 건너뛰고 싶을 때는 `git commit --no-verify`를 사용할 수 있습니다.  
+> 단, CI에서는 항상 검사가 실행되므로 push 전에 반드시 수정해야 합니다.
 
 ---
 
@@ -49,19 +108,28 @@ pnpm install
 cp .env.example .env
 ```
 
-`.env` 파일을 열어 값을 확인합니다.
+| 변수                | 설명                                       |
+| ------------------- | ------------------------------------------ |
+| `VITE_API_BASE_URL` | API 서버 주소. 개발 중에는 **비워둡니다.** |
 
-| 변수 | 설명 | 기본값 |
-|---|---|---|
-| `VITE_API_BASE_URL` | Spring Boot API 서버 주소 | `http://localhost:8080` |
+개발 중에는 비워두면 vite dev server가 `/api` 요청을 `http://localhost:8080`
+으로 프록시합니다. 브라우저 입장에서는 같은 오리진이라 **CORS 문제가 없습니다.**
+프로덕션 빌드 시에만 배포된 API 서버 주소를 넣습니다.
+
+> `.env`는 git에 올라가지 않습니다. 변수를 추가할 때는 `.env.example`에도
+> 같이 추가해서 팀원과 공유해주세요.
 
 ### 4. 개발 서버 실행
 
 ```bash
-pnpm dev
+pnpm run dev
 ```
 
-브라우저에서 `http://localhost:5173` 접속
+브라우저에서 `http://localhost:3000` 접속
+
+> 포트가 5173이 아니라 **3000**인 이유: 백엔드의 공유 링크 설정
+> (`app.share-base-url`)이 `http://localhost:3000/q`를 가리키기 때문입니다.
+> 포트가 다르면 공유 링크 기능을 로컬에서 테스트할 수 없습니다.
 
 ---
 
@@ -73,6 +141,21 @@ pnpm build
 
 # 빌드 결과물 미리보기
 pnpm preview
+```
+
+### Docker로 실행
+
+`Dockerfile`은 멀티 스테이지 빌드를 사용합니다.
+빌드 결과물(`dist/`)을 Nginx로 서빙하며, SPA 라우팅을 위해 `nginx.conf`에서
+`try_files ... /index.html` 처리를 합니다.
+
+```bash
+# client 디렉토리에서 단독 실행
+docker build -t mumulbox-client .
+docker run -p 3000:80 mumulbox-client
+
+# 전체 스택(DB + 서버 + 클라이언트)은 루트에서
+docker compose up --build
 ```
 
 ---
@@ -95,14 +178,14 @@ git push origin (branchname)
 
 커밋 메시지는 해당 태그 뒤에 (fe)를 붙여서 작성합니다.
 
-| 태그 | 용도 |
-|---|---|
-| `feat:` | 새 기능 추가 |
-| `fix:` | 버그 수정 |
-| `refactor:` | 기능 변경 없는 코드 개선 |
-| `style:` | 포맷, 세미콜론 등 코드 외형만 변경 |
-| `chore:` | 빌드, 설정 파일 변경 |
-| `docs:` | 문서 수정 |
+| 태그        | 용도                               |
+| ----------- | ---------------------------------- |
+| `feat:`     | 새 기능 추가                       |
+| `fix:`      | 버그 수정                          |
+| `refactor:` | 기능 변경 없는 코드 개선           |
+| `style:`    | 포맷, 세미콜론 등 코드 외형만 변경 |
+| `chore:`    | 빌드, 설정 파일 변경               |
+| `docs:`     | 문서 수정                          |
 
 ---
 

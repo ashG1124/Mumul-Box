@@ -1,1 +1,2 @@
-pnpm lint-staged
+#!/bin/sh
+cd client && pnpm lint-staged

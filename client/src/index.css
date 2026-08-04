@@ -2,64 +2,95 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
 /* Tailwind CSS v4 */
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* ============================================================
    MuMul Box Design Tokens
    ============================================================ */
 :root {
-  /* Primary palette */
-  --p-50:  #F4F0FE;
-  --p-100: #E8DFFE;
-  --p-200: #D0BEFD;
-  --p-300: #B89BFC;
-  --p-400: #A07BF9;
-  --p-500: #8961F4;
-  --p-600: #6E4FEA;
-  --p-700: #5538C8;
-  --p-800: #3F2BB0;
+  /* === Brand · Primary (Violet) === */
+  --primary-50: #f6f4ff;
+  --primary-100: #ece7ff;
+  --primary-200: #d8cfff;
+  --primary-300: #b5a6ff;
+  --primary-400: #8e78ff;
+  --primary-500: #6d5bff;
+  --primary-600: #5b47e0;
+  --primary-700: #4732b8;
+  --primary-800: #2f2087;
 
-  /* Gradients */
-  --grad-main:   linear-gradient(135deg, #A07BF9 0%, #6E4FEA 100%);
-  --grad-bright: linear-gradient(135deg, #C9B6FF 0%, #8961F4 100%);
-  --grad-pink:   linear-gradient(135deg, #FF9FE0 0%, #B570F4 100%);
-  --grad-blue:   linear-gradient(135deg, #8DCBFF 0%, #6E4FEA 100%);
+  /* === Neutral / Surface === */
+  --bg: #fafafb;
+  --surface: #ffffff;
+  --surface-2: #f4f4f7;
+  --border-1: #f0f0f4;
+  --border-2: #e5e5ec;
+  --border-3: #d6d6e0;
 
-  /* Backgrounds */
-  --bg:        #F7F5FB;
-  --surface:   #FFFFFF;
-  --surface-2: #F2EEFB;
+  /* === Text === */
+  --text-900: #0f0f1a;
+  --text-700: #2a2a38;
+  --text-500: #6b6b7b;
+  --text-400: #9b9ba8;
+  --text-300: #c2c2cc;
 
-  /* Text */
-  --t-strong: #0E0E1A;
-  --t-body:   #1F1F2E;
-  --t-muted:  #6B6B7E;
-  --t-soft:   #9A9AAB;
+  /* === Semantic === */
+  --success: #14c38e;
+  --warning: #ffb547;
+  --danger: #ff5c5c;
+  --info: #4d8dff;
+  --accent-yellow: #ffd66b;
 
-  /* Borders */
-  --b-1: #EEEAF5;
-  --b-2: #DCD3EB;
-  --b-3: #C8BEDD;
-
-  /* Radius */
-  --r-sm: 10px;
-  --r-md: 14px;
-  --r-lg: 20px;
-  --r-xl: 28px;
+  /* === Radius === */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 20px;
+  --r-2xl: 28px;
   --r-full: 999px;
+
+  /* === Shadow === */
+  --shadow-sm: 0 1px 2px rgba(15, 15, 26, 0.04);
+  --shadow-md: 0 4px 16px rgba(15, 15, 26, 0.06);
+  --shadow-lg: 0 16px 40px rgba(15, 15, 26, 0.08);
+  --shadow-brand: 0 14px 32px rgba(109, 91, 255, 0.28);
 }
 
-/* 전역 기본값 */
-*, *::before, *::after { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body {
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--t-body);
-  -webkit-font-smoothing: antialiased;
-  line-height: 1.6;
-  font-size: 15px;
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family:
+      'Pretendard',
+      -apple-system,
+      BlinkMacSystemFont,
+      system-ui,
+      sans-serif;
+    background: var(--bg);
+    color: var(--text-900);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  button,
+  input,
+  textarea {
+    font-family: inherit;
+  }
+  button {
+    cursor: pointer;
+    border: 0;
+    background: transparent;
+  }
 }
-a { color: inherit; text-decoration: none; }
-button, input, textarea { font-family: inherit; }
-button { cursor: pointer; border: 0; background: transparent; }

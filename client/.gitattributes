@@ -1,0 +1,13 @@
+# Prettier 설정(.prettierrc)이 endOfLine: "lf" 이므로 줄 끝을 LF로 고정한다.
+# 이게 없으면 Windows에서 core.autocrlf=true 때문에 CRLF로 체크아웃되어
+# `pnpm format:check`가 손대지도 않은 파일까지 전부 실패한다.
+* text=auto eol=lf
+
+# 바이너리는 변환하지 않는다.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
