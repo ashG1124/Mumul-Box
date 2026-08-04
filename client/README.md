@@ -102,13 +102,34 @@ pnpm install
 
 > `pnpm`이 없으면 먼저 설치: `npm install -g pnpm`
 
-### 3. 개발 서버 실행
+### 3. 환경변수 설정
+
+```bash
+cp .env.example .env
+```
+
+| 변수                | 설명                                       |
+| ------------------- | ------------------------------------------ |
+| `VITE_API_BASE_URL` | API 서버 주소. 개발 중에는 **비워둡니다.** |
+
+개발 중에는 비워두면 vite dev server가 `/api` 요청을 `http://localhost:8080`
+으로 프록시합니다. 브라우저 입장에서는 같은 오리진이라 **CORS 문제가 없습니다.**
+프로덕션 빌드 시에만 배포된 API 서버 주소를 넣습니다.
+
+> `.env`는 git에 올라가지 않습니다. 변수를 추가할 때는 `.env.example`에도
+> 같이 추가해서 팀원과 공유해주세요.
+
+### 4. 개발 서버 실행
 
 ```bash
 pnpm run dev
 ```
 
-브라우저에서 `http://localhost:5173` 접속
+브라우저에서 `http://localhost:3000` 접속
+
+> 포트가 5173이 아니라 **3000**인 이유: 백엔드의 공유 링크 설정
+> (`app.share-base-url`)이 `http://localhost:3000/q`를 가리키기 때문입니다.
+> 포트가 다르면 공유 링크 기능을 로컬에서 테스트할 수 없습니다.
 
 ---
 
@@ -120,6 +141,21 @@ pnpm build
 
 # 빌드 결과물 미리보기
 pnpm preview
+```
+
+### Docker로 실행
+
+`Dockerfile`은 멀티 스테이지 빌드를 사용합니다.
+빌드 결과물(`dist/`)을 Nginx로 서빙하며, SPA 라우팅을 위해 `nginx.conf`에서
+`try_files ... /index.html` 처리를 합니다.
+
+```bash
+# client 디렉토리에서 단독 실행
+docker build -t mumulbox-client .
+docker run -p 3000:80 mumulbox-client
+
+# 전체 스택(DB + 서버 + 클라이언트)은 루트에서
+docker compose up --build
 ```
 
 ---
