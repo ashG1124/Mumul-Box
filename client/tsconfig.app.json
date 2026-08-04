@@ -20,9 +20,10 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": ".",
+    /* 경로 별칭 — baseUrl은 TS 7.0에서 제거 예정이라 쓰지 않고,
+       paths를 이 파일 기준 상대경로로 지정한다. (vite.config.ts의 alias와 동일) */
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"]
