@@ -40,7 +40,6 @@ export default function MyPage() {
   const [notifyAns, setNotifyAns] = useState(true);
   const [notifyNotice, setNotifyNotice] = useState(false);
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [language, setLanguage] = useState('한국어');
   const [receiveAnon, setReceiveAnon] = useState(true);
 
@@ -220,20 +219,6 @@ export default function MyPage() {
                 복사하기
               </Button>
             </div>
-          </div>
-          <div className="flex gap-[10px] mt-[14px]">
-            <button className="w-[44px] h-[44px] rounded-[14px] flex items-center justify-center text-[14px] font-extrabold text-[#3C1E1E] bg-[#FEE500] hover:-translate-y-[2px] transition-transform">
-              K
-            </button>
-            <button className="w-[44px] h-[44px] rounded-[14px] flex items-center justify-center text-[14px] font-extrabold text-white bg-black hover:-translate-y-[2px] transition-transform">
-              𝕏
-            </button>
-            <button className="w-[44px] h-[44px] rounded-[14px] flex items-center justify-center text-[14px] font-extrabold text-white bg-gradient-to-br from-[#F58529] via-[#DD2A7B] to-[#8134AF] hover:-translate-y-[2px] transition-transform">
-              IG
-            </button>
-            <button className="w-[44px] h-[44px] rounded-[14px] flex items-center justify-center text-[14px] font-extrabold text-white bg-[#06C755] hover:-translate-y-[2px] transition-transform">
-              L
-            </button>
           </div>
         </div>
 
@@ -473,27 +458,10 @@ export default function MyPage() {
               ⚙️ 설정
             </h3>
             <p className="m-0 text-[13px] text-[var(--text-500)]">
-              화면 테마와 언어, 공개 여부 등 환경을 조정할 수 있어요.
+              언어와 공개 여부 등 환경을 조정할 수 있어요.
             </p>
           </div>
           <div className="flex flex-col gap-[10px]">
-            <div className="flex items-center gap-[16px] p-[16px_20px] bg-[var(--surface-2)] border border-[var(--border-1)] rounded-[var(--r-md)]">
-              <div className="w-[40px] h-[40px] rounded-[12px] bg-white border border-[var(--border-1)] flex items-center justify-center text-[20px] shrink-0">
-                🌙
-              </div>
-              <div className="flex-1">
-                <h5 className="m-0 text-[14px] font-extrabold text-[var(--text-900)]">
-                  다크 모드
-                </h5>
-                <p className="m-0 mt-[2px] text-[12.5px] text-[var(--text-500)]">
-                  저녁/야간 사용 시 눈의 피로를 줄여줍니다.
-                </p>
-              </div>
-              <ToggleSwitch
-                checked={isDarkMode}
-                onChange={() => setIsDarkMode(!isDarkMode)}
-              />
-            </div>
             <div className="flex items-center gap-[16px] p-[16px_20px] bg-[var(--surface-2)] border border-[var(--border-1)] rounded-[var(--r-md)]">
               <div className="w-[40px] h-[40px] rounded-[12px] bg-white border border-[var(--border-1)] flex items-center justify-center text-[20px] shrink-0">
                 🌐
