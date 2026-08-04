@@ -47,12 +47,11 @@ const FEED_DATA = [
 
 export default function HomePage({ isLoggedIn = false }: HomePageProps) {
   return (
-    <main className="w-full min-h-screen">      
+    <main className="w-full min-h-screen">
       {/* ============================================================
           1. HERO 섹션
           ============================================================ */}
       <section className="max-w-[1280px] mx-auto pt-[72px] px-[32px] pb-[48px] grid grid-cols-[1.05fr_1fr] gap-[64px] items-center">
-        
         {/* 좌측: 타이틀 및 검색 */}
         <div>
           <h1 className="text-[56px] font-extrabold tracking-[-0.03em] leading-[1.15] mb-[16px] text-[var(--text-900)]">
@@ -62,17 +61,19 @@ export default function HomePage({ isLoggedIn = false }: HomePageProps) {
             <br />
             진심으로 답하다
           </h1>
-          
+
           {/* 로그인 상태에 따라 설명 텍스트가 바뀝니다 */}
           <p className="text-[17px] text-[var(--text-500)] mb-[36px] max-w-[440px] leading-[1.6]">
             {isLoggedIn ? (
               <>
-                오늘도 누군가는 진심 어린 답변을 기다리고 있어요.<br />
+                오늘도 누군가는 진심 어린 답변을 기다리고 있어요.
+                <br />
                 닉네임을 검색해 익명 질문을 남기거나, 내 질문함을 확인해 보세요.
               </>
             ) : (
               <>
-                관심 있는 유저를 검색해 익명 질문을 남기거나,<br />
+                관심 있는 유저를 검색해 익명 질문을 남기거나,
+                <br />
                 로그인 없이 공개된 답변 피드를 둘러보세요.
               </>
             )}
@@ -87,14 +88,22 @@ export default function HomePage({ isLoggedIn = false }: HomePageProps) {
                   안녕하세요, 별빛익명님 👋
                 </h4>
                 <p className="m-0 text-[12px] text-[var(--text-500)]">
-                  미답변 <strong className="text-[var(--primary-700)]">3개</strong>
+                  미답변{' '}
+                  <strong className="text-[var(--primary-700)]">3개</strong>
                 </p>
               </div>
             </div>
           )}
 
           <form className="flex items-center gap-[10px] w-full max-w-[460px] h-[60px] pl-[24px] pr-[8px] bg-[var(--surface)] border border-[var(--border-2)] rounded-[var(--r-full)]">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-400)" strokeWidth="2">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="var(--text-400)"
+              strokeWidth="2"
+            >
               <circle cx="11" cy="11" r="7" />
               <path d="m20 20-3.5-3.5" />
             </svg>
@@ -109,7 +118,13 @@ export default function HomePage({ isLoggedIn = false }: HomePageProps) {
               className="h-[44px] px-[22px] rounded-[var(--r-full)] bg-[var(--primary-500)] text-white text-[14px] font-bold flex items-center gap-[8px] hover:bg-[var(--primary-600)] transition-colors"
             >
               검색
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" className="w-[14px] h-[14px]">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.4"
+                className="w-[14px] h-[14px]"
+              >
                 <path d="M5 12h14M13 5l7 7-7 7" />
               </svg>
             </button>
@@ -121,10 +136,13 @@ export default function HomePage({ isLoggedIn = false }: HomePageProps) {
           <div className="absolute top-[20px] left-[30px] bg-[var(--surface)] border border-[var(--border-2)] rounded-[var(--r-xl)] p-[18px_22px] max-w-[330px] shadow-sm">
             <div className="text-[13px] font-bold text-[var(--text-900)] mb-[6px] tracking-[-0.01em] leading-[1.45]">
               Q. 요즘 제일 좋아하는 노래는?
-              <span className="inline-block ml-[6px] px-[8px] py-[2px] rounded-[var(--r-full)] bg-[var(--primary-50)] text-[var(--primary-700)] text-[11px] font-bold">익명</span>
+              <span className="inline-block ml-[6px] px-[8px] py-[2px] rounded-[var(--r-full)] bg-[var(--primary-50)] text-[var(--primary-700)] text-[11px] font-bold">
+                익명
+              </span>
             </div>
             <div className="flex items-center gap-[6px] mt-[8px] text-[11px] text-[var(--text-500)]">
-              <span className="w-[18px] h-[18px] rounded-full bg-gradient-to-br from-[#FFB6E1] to-[var(--primary-300)]" /> 2026.05.10 · 1m ago
+              <span className="w-[18px] h-[18px] rounded-full bg-gradient-to-br from-[#FFB6E1] to-[var(--primary-300)]" />{' '}
+              2026.05.10 · 1m ago
             </div>
           </div>
           <div className="absolute top-[120px] right-[40px] bg-[var(--primary-500)] text-white rounded-[var(--r-xl)] p-[18px_22px] max-w-[330px] shadow-[var(--shadow-brand)]">
@@ -132,16 +150,20 @@ export default function HomePage({ isLoggedIn = false }: HomePageProps) {
               A. 최근엔 NewJeans "Supernatural" 무한 재생 중이에요 🎵
             </div>
             <div className="flex items-center gap-[6px] mt-[8px] text-[11px] text-white/80">
-              <span className="w-[18px] h-[18px] rounded-full bg-white/30" /> 크리에이터 닉네임 · 2m ago
+              <span className="w-[18px] h-[18px] rounded-full bg-white/30" />{' '}
+              크리에이터 닉네임 · 2m ago
             </div>
           </div>
           <div className="absolute top-[248px] left-[10px] bg-[var(--surface)] border border-[var(--border-2)] rounded-[var(--r-xl)] p-[18px_22px] max-w-[330px] shadow-sm">
             <div className="text-[13px] font-bold text-[var(--text-900)] mb-[6px] tracking-[-0.01em] leading-[1.45]">
               Q. 가장 좋아하는 여행지는 어디인가요?
-              <span className="inline-block ml-[6px] px-[8px] py-[2px] rounded-[var(--r-full)] bg-[var(--primary-50)] text-[var(--primary-700)] text-[11px] font-bold">익명</span>
+              <span className="inline-block ml-[6px] px-[8px] py-[2px] rounded-[var(--r-full)] bg-[var(--primary-50)] text-[var(--primary-700)] text-[11px] font-bold">
+                익명
+              </span>
             </div>
             <div className="flex items-center gap-[6px] mt-[8px] text-[11px] text-[var(--text-500)]">
-              <span className="w-[18px] h-[18px] rounded-full bg-gradient-to-br from-[#FFB6E1] to-[var(--primary-300)]" /> 2026.05.10 · 5m ago
+              <span className="w-[18px] h-[18px] rounded-full bg-gradient-to-br from-[#FFB6E1] to-[var(--primary-300)]" />{' '}
+              2026.05.10 · 5m ago
             </div>
           </div>
           <div className="absolute top-[348px] right-[64px] bg-gradient-to-br from-[var(--primary-400)] to-[var(--primary-600)] text-white rounded-[var(--r-xl)] p-[18px_22px] max-w-[330px] shadow-[var(--shadow-md)]">
@@ -149,7 +171,8 @@ export default function HomePage({ isLoggedIn = false }: HomePageProps) {
               A. 최근 다녀온 제주도 김녕 해변이 진짜 좋았어요 🌊
             </div>
             <div className="flex items-center gap-[6px] mt-[8px] text-[11px] text-white/80">
-              <span className="w-[18px] h-[18px] rounded-full bg-white/30" /> 여행유튜버J · 3m ago
+              <span className="w-[18px] h-[18px] rounded-full bg-white/30" />{' '}
+              여행유튜버J · 3m ago
             </div>
           </div>
         </div>
@@ -167,7 +190,7 @@ export default function HomePage({ isLoggedIn = false }: HomePageProps) {
             더보기
           </span>
         </div>
-        
+
         <div className="grid grid-cols-4 gap-[18px]">
           {FEED_DATA.map((item) => (
             <div
@@ -183,10 +206,12 @@ export default function HomePage({ isLoggedIn = false }: HomePageProps) {
               <p className="text-[13.5px] text-[var(--text-900)] mb-[16px] leading-[1.6] line-clamp-3">
                 {item.a}
               </p>
-              
+
               <div className="mt-auto flex items-center justify-between pt-[12px] border-t border-[var(--border-1)] text-[12px] text-[var(--text-500)]">
                 <span className="inline-flex items-center gap-[6px] font-semibold text-[var(--text-500)]">
-                  <span className={`w-[20px] h-[20px] rounded-full shrink-0 bg-gradient-to-br ${item.avatarGradient}`} />
+                  <span
+                    className={`w-[20px] h-[20px] rounded-full shrink-0 bg-gradient-to-br ${item.avatarGradient}`}
+                  />
                   {item.nickname}
                 </span>
                 <span className="font-semibold">{item.date}</span>
@@ -203,31 +228,63 @@ export default function HomePage({ isLoggedIn = false }: HomePageProps) {
         <div className="bg-gradient-to-r from-[var(--primary-500)] to-[var(--primary-600)] rounded-[var(--r-lg)] p-[24px] grid grid-cols-3 gap-[8px] text-white shadow-[var(--shadow-brand)]">
           <div className="p-[8px_4px]">
             <div className="w-[36px] h-[36px] rounded-[12px] bg-white/20 border border-white/25 flex items-center justify-center mb-[10px]">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-[18px] h-[18px]">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                className="w-[18px] h-[18px]"
+              >
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
             </div>
-            <h5 className="text-[13px] font-extrabold m-0 mb-[4px] tracking-[-0.01em]">완벽한 익명성 보장</h5>
-            <p className="text-[11px] text-white/85 m-0 leading-[1.5]">닉네임 익명성 끝까지 안전 보장</p>
+            <h5 className="text-[13px] font-extrabold m-0 mb-[4px] tracking-[-0.01em]">
+              완벽한 익명성 보장
+            </h5>
+            <p className="text-[11px] text-white/85 m-0 leading-[1.5]">
+              닉네임 익명성 끝까지 안전 보장
+            </p>
           </div>
           <div className="p-[8px_4px]">
             <div className="w-[36px] h-[36px] rounded-[12px] bg-white/20 border border-white/25 flex items-center justify-center mb-[10px]">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-[18px] h-[18px]">
-                <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" />
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                className="w-[18px] h-[18px]"
+              >
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
                 <path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4" />
               </svg>
             </div>
-            <h5 className="text-[13px] font-extrabold m-0 mb-[4px] tracking-[-0.01em]">쉽고 빠른 공유</h5>
-            <p className="text-[11px] text-white/85 m-0 leading-[1.5]">링크 한 번이면 무물 시작</p>
+            <h5 className="text-[13px] font-extrabold m-0 mb-[4px] tracking-[-0.01em]">
+              쉽고 빠른 공유
+            </h5>
+            <p className="text-[11px] text-white/85 m-0 leading-[1.5]">
+              링크 한 번이면 무물 시작
+            </p>
           </div>
           <div className="p-[8px_4px]">
             <div className="w-[36px] h-[36px] rounded-[12px] bg-white/20 border border-white/25 flex items-center justify-center mb-[10px]">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-[18px] h-[18px]">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                className="w-[18px] h-[18px]"
+              >
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               </svg>
             </div>
-            <h5 className="text-[13px] font-extrabold m-0 mb-[4px] tracking-[-0.01em]">크리에이터 소통 최적화</h5>
-            <p className="text-[11px] text-white/85 m-0 leading-[1.5]">팬과 소통하는 가장 빠른 방법</p>
+            <h5 className="text-[13px] font-extrabold m-0 mb-[4px] tracking-[-0.01em]">
+              크리에이터 소통 최적화
+            </h5>
+            <p className="text-[11px] text-white/85 m-0 leading-[1.5]">
+              팬과 소통하는 가장 빠른 방법
+            </p>
           </div>
         </div>
       </section>

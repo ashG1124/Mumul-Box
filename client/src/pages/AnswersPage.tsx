@@ -50,7 +50,7 @@ const ANSWERS_DATA = [
   {
     id: 8,
     q: '여행 브이로그 조회수가 안 나와요. 뭐가 문제일까요?',
-    a: 'A. 대부분 \'도착까지가 너무 길어서\'예요. 첫 15초 안에 가장 좋은 장면을 보여주세요. 출발 준비·공항·기내식은 과감히 줄이고, 목적지의 하이라이트부터 시작하는 편집이 훨씬 잘 됩니다.',
+    a: "A. 대부분 '도착까지가 너무 길어서'예요. 첫 15초 안에 가장 좋은 장면을 보여주세요. 출발 준비·공항·기내식은 과감히 줄이고, 목적지의 하이라이트부터 시작하는 편집이 훨씬 잘 됩니다.",
     date: '2026-02-03',
   },
   {
@@ -62,7 +62,7 @@ const ANSWERS_DATA = [
   {
     id: 10,
     q: '여행 다녀오면 늘 현실 복귀가 힘들어요. 어떻게 하세요?',
-    a: 'A. 마지막 날을 \'여행지에서 쉬는 날\'이 아니라 \'집에서 쉬는 날\'로 비워둬요. 도착 다음 날 바로 출근하면 후폭풍이 큽니다. 하루의 완충 구간을 일정에 미리 넣어두세요.',
+    a: "A. 마지막 날을 '여행지에서 쉬는 날'이 아니라 '집에서 쉬는 날'로 비워둬요. 도착 다음 날 바로 출근하면 후폭풍이 큽니다. 하루의 완충 구간을 일정에 미리 넣어두세요.",
     date: '2026-01-09',
   },
 ];
@@ -70,17 +70,55 @@ const ANSWERS_DATA = [
 export default function AnswersPage() {
   return (
     <main className="max-w-[920px] mx-auto p-[32px_32px_120px]">
-      
       {/* ============================================================
           1. Breadcrumb (경로 안내)
           ============================================================ */}
       <div className="flex items-center gap-[10px] text-[13px] font-semibold text-[var(--text-500)] mb-[24px]">
-        <a href="/" className="hover:text-[var(--primary-600)] transition-colors">홈</a>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-[14px] h-[14px] opacity-60"><path d="m9 18 6-6-6-6"/></svg>
-        <a href="/search" className="hover:text-[var(--primary-600)] transition-colors">유저 검색</a>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-[14px] h-[14px] opacity-60"><path d="m9 18 6-6-6-6"/></svg>
-        <a href="/qbox" className="hover:text-[var(--primary-600)] transition-colors">@traveler-J 의 질문함</a>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-[14px] h-[14px] opacity-60"><path d="m9 18 6-6-6-6"/></svg>
+        <a
+          href="/"
+          className="hover:text-[var(--primary-600)] transition-colors"
+        >
+          홈
+        </a>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className="w-[14px] h-[14px] opacity-60"
+        >
+          <path d="m9 18 6-6-6-6" />
+        </svg>
+        <a
+          href="/search"
+          className="hover:text-[var(--primary-600)] transition-colors"
+        >
+          유저 검색
+        </a>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className="w-[14px] h-[14px] opacity-60"
+        >
+          <path d="m9 18 6-6-6-6" />
+        </svg>
+        <a
+          href="/qbox"
+          className="hover:text-[var(--primary-600)] transition-colors"
+        >
+          @traveler-J 의 질문함
+        </a>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className="w-[14px] h-[14px] opacity-60"
+        >
+          <path d="m9 18 6-6-6-6" />
+        </svg>
         <span className="font-bold text-[var(--text-900)]">전체 답변</span>
       </div>
 
@@ -89,22 +127,42 @@ export default function AnswersPage() {
           ============================================================ */}
       <section className="bg-white border border-[var(--border-2)] rounded-[var(--r-lg)] p-[24px_28px] shadow-[var(--shadow-sm)] mb-[24px] flex items-center gap-[18px]">
         {/* 그라데이션 아바타 공통 컴포넌트 재사용 */}
-        <Avatar hasImg={false} size={56} className="bg-gradient-to-br from-[#FFB6E1] to-[var(--primary-300)] border-[2px] border-white shadow-[var(--shadow-sm)]" />
-        
+        <Avatar
+          hasImg={false}
+          size={56}
+          className="bg-gradient-to-br from-[#FFB6E1] to-[var(--primary-300)] border-[2px] border-white shadow-[var(--shadow-sm)]"
+        />
+
         <div className="flex-1">
           <h1 className="m-0 mb-[4px] text-[20px] font-extrabold text-[var(--text-900)] tracking-[-0.01em]">
-            여행유튜버J 
-            <span className="text-[14px] font-semibold text-[var(--text-500)] ml-[8px]" style={{ fontFamily: "'SF Mono', ui-monospace, monospace" }}>
+            여행유튜버J
+            <span
+              className="text-[14px] font-semibold text-[var(--text-500)] ml-[8px]"
+              style={{ fontFamily: "'SF Mono', ui-monospace, monospace" }}
+            >
               @traveler-J
             </span>
           </h1>
           <p className="m-0 text-[13.5px] text-[var(--text-500)]">
-            지금까지 등록한 답변 <strong className="font-extrabold text-[var(--primary-700)]">48개</strong> · 최신순으로 정렬됩니다.
+            지금까지 등록한 답변{' '}
+            <strong className="font-extrabold text-[var(--primary-700)]">
+              48개
+            </strong>{' '}
+            · 최신순으로 정렬됩니다.
           </p>
         </div>
-        
+
         <Button variant="primary" href="/qbox" className="!h-[44px]">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-[16px] h-[16px]"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="w-[16px] h-[16px]"
+          >
+            <path d="M22 2 11 13" />
+            <path d="M22 2 15 22l-4-9-9-4 20-7z" />
+          </svg>
           질문 보내기
         </Button>
       </section>
@@ -126,7 +184,7 @@ export default function AnswersPage() {
           ============================================================ */}
       <section className="flex flex-col gap-[14px] mb-[32px]">
         {ANSWERS_DATA.map((item) => (
-          <article 
+          <article
             key={item.id}
             className="grid grid-cols-[1fr_auto] gap-[24px] items-start bg-white border border-[var(--border-2)] rounded-[var(--r-lg)] p-[24px_26px] cursor-pointer transition-all duration-[180ms] hover:border-[var(--primary-400)] hover:-translate-y-[1px] hover:shadow-[var(--shadow-md)]"
           >
@@ -141,7 +199,7 @@ export default function AnswersPage() {
                 {item.a}
               </p>
             </div>
-            
+
             <div className="flex flex-col items-end gap-[6px] min-w-[90px]">
               <span className="inline-flex items-center gap-[4px] h-[24px] px-[10px] rounded-[var(--r-full)] text-[11.5px] font-bold bg-[rgba(34,194,154,0.12)] text-[#0E8C68]">
                 ● 답변 완료
@@ -158,7 +216,10 @@ export default function AnswersPage() {
           5. 페이지네이션
           ============================================================ */}
       <div className="flex items-center justify-center gap-[6px]">
-        <button disabled className="min-w-[38px] h-[38px] px-[12px] rounded-[10px] bg-white border border-[var(--border-2)] text-[13.5px] font-bold text-[var(--text-900)] opacity-40 cursor-not-allowed">
+        <button
+          disabled
+          className="min-w-[38px] h-[38px] px-[12px] rounded-[10px] bg-white border border-[var(--border-2)] text-[13.5px] font-bold text-[var(--text-900)] opacity-40 cursor-not-allowed"
+        >
           ‹ 이전
         </button>
         <button className="min-w-[38px] h-[38px] px-[12px] rounded-[10px] bg-[var(--primary-500)] text-white text-[13.5px] font-bold shadow-[var(--shadow-brand)] border-transparent">
@@ -166,7 +227,10 @@ export default function AnswersPage() {
         </button>
         {/* 2부터 5까지 반복 생성 */}
         {[2, 3, 4, 5].map((num) => (
-          <button key={num} className="min-w-[38px] h-[38px] px-[12px] rounded-[10px] bg-white border border-[var(--border-2)] text-[13.5px] font-bold text-[var(--text-900)] hover:border-[var(--primary-400)] hover:text-[var(--primary-600)] transition-colors">
+          <button
+            key={num}
+            className="min-w-[38px] h-[38px] px-[12px] rounded-[10px] bg-white border border-[var(--border-2)] text-[13.5px] font-bold text-[var(--text-900)] hover:border-[var(--primary-400)] hover:text-[var(--primary-600)] transition-colors"
+          >
             {num}
           </button>
         ))}
@@ -174,7 +238,6 @@ export default function AnswersPage() {
           다음 ›
         </button>
       </div>
-
     </main>
   );
 }

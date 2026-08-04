@@ -41,16 +41,15 @@ export const Button: React.FC<ButtonProps> = ({
       'bg-[var(--primary-500)] text-white shadow-[var(--shadow-brand)] hover:bg-[var(--primary-600)] hover:-translate-y-[1px]',
     // 흰 배경 + --b-2(#DCD3EB) 보라빛 회색 테두리, 호버 시 보라 톤
     outline:
-      'bg-[var(--surface)] text-[var(--text-900)] !border-[var(--border-3)] hover:!border-[var(--primary-400)] hover:text-[var(--primary-600)]',    
-    dark: 
-      'bg-[var(--text-900)] text-white hover:bg-[#1F1F2E]', 
+      'bg-[var(--surface)] text-[var(--text-900)] !border-[var(--border-3)] hover:!border-[var(--primary-400)] hover:text-[var(--primary-600)]',
+    dark: 'bg-[var(--text-900)] text-white hover:bg-[#1F1F2E]',
     ghost:
       'bg-transparent text-[var(--text-700)] hover:bg-[var(--primary-50)] hover:text-[var(--primary-600)]',
   };
 
   // 4. pill 옵션이 true면 동그라미(rounded-full)를 강제로 적용 (!important 역할)
   const radiusOverride = pill ? '!rounded-[var(--r-full)]' : '';
-  
+
   const cls =
     `${baseStyle} ${sizeStyles[size]} ${variantStyles[variant]} ${radiusOverride} ${className}`.trim();
 

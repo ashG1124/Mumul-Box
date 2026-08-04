@@ -48,35 +48,56 @@ export default function QBoxPage() {
 
   return (
     <main className="max-w-[1280px] mx-auto px-[32px] pt-[32px] pb-[120px]">
-      
       {/* ============================================================
           1. Breadcrumb (경로 안내)
           ============================================================ */}
       <div className="flex items-center gap-[10px] text-[13px] font-semibold text-[var(--text-500)] mb-[24px]">
-        <a href="/" className="hover:text-[var(--primary-600)] transition-colors">홈</a>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-[14px] h-[14px] opacity-60">
+        <a
+          href="/"
+          className="hover:text-[var(--primary-600)] transition-colors"
+        >
+          홈
+        </a>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className="w-[14px] h-[14px] opacity-60"
+        >
           <path d="m9 18 6-6-6-6" />
         </svg>
-        <a href="/search" className="hover:text-[var(--primary-600)] transition-colors">유저 검색</a>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-[14px] h-[14px] opacity-60">
+        <a
+          href="/search"
+          className="hover:text-[var(--primary-600)] transition-colors"
+        >
+          유저 검색
+        </a>
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className="w-[14px] h-[14px] opacity-60"
+        >
           <path d="m9 18 6-6-6-6" />
         </svg>
-        <span className="font-bold text-[var(--text-900)]">@traveler-J 의 질문함</span>
+        <span className="font-bold text-[var(--text-900)]">
+          @traveler-J 의 질문함
+        </span>
       </div>
 
       {/* ============================================================
           2. 레이아웃 분할 (좌측 380px / 우측 1fr)
           ============================================================ */}
       <div className="grid grid-cols-[380px_1fr] gap-[32px] items-start">
-        
         {/* === 좌측: 프로필 + 질문 작성 폼 (Sticky) === */}
         <aside className="sticky top-[104px] flex flex-col gap-[20px]">
-          
           {/* 프로필 카드 */}
           <div className="bg-[var(--surface)] border border-[var(--border-2)] rounded-[var(--r-lg)] p-[28px_28px_24px] shadow-[var(--shadow-sm)] text-center relative overflow-hidden">
             {/* 상단 핑크/보라 그라데이션 장식 */}
             <div className="absolute top-0 left-0 right-0 h-[120px] bg-gradient-to-br from-[#FF9FE0] to-[#B570F4] opacity-[0.18] z-0 pointer-events-none" />
-            
+
             <div className="relative z-10 flex flex-col items-center">
               <Avatar
                 hasImg={true}
@@ -89,21 +110,39 @@ export default function QBoxPage() {
               <p className="text-[13.5px] text-[var(--text-500)] m-0 mb-[16px] leading-[1.5]">
                 국내·해외 여행 콘텐츠. 진심 어린 질문 환영해요 ✈️
               </p>
-              
+
               <div className="grid grid-cols-2 w-full border-y border-[var(--border-1)] py-[14px] mb-[16px]">
                 <div>
-                  <div className="text-[18px] font-extrabold text-[var(--text-900)] tracking-[-0.01em]">12</div>
-                  <div className="text-[11.5px] font-semibold text-[var(--text-500)] mt-[2px]">답변 대기</div>
+                  <div className="text-[18px] font-extrabold text-[var(--text-900)] tracking-[-0.01em]">
+                    12
+                  </div>
+                  <div className="text-[11.5px] font-semibold text-[var(--text-500)] mt-[2px]">
+                    답변 대기
+                  </div>
                 </div>
                 <div>
-                  <div className="text-[18px] font-extrabold text-[var(--text-900)] tracking-[-0.01em]">48</div>
-                  <div className="text-[11.5px] font-semibold text-[var(--text-500)] mt-[2px]">답변 완료</div>
+                  <div className="text-[18px] font-extrabold text-[var(--text-900)] tracking-[-0.01em]">
+                    48
+                  </div>
+                  <div className="text-[11.5px] font-semibold text-[var(--text-500)] mt-[2px]">
+                    답변 완료
+                  </div>
                 </div>
               </div>
 
               <div className="flex w-full">
-                <Button variant="outline" size="sm" className="flex-1 w-full !h-[36px]">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-[16px] h-[16px]">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 w-full !h-[36px]"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className="w-[16px] h-[16px]"
+                  >
                     <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13" />
                   </svg>
                   이 질문함 공유하기
@@ -116,14 +155,24 @@ export default function QBoxPage() {
           <div className="bg-[var(--surface)] border border-[var(--border-2)] rounded-[var(--r-lg)] p-[24px] shadow-[var(--shadow-sm)]">
             <div className="flex items-center gap-[10px] mb-[14px]">
               <div className="w-[36px] h-[36px] rounded-[var(--r-md)] bg-gradient-to-br from-[var(--primary-400)] to-[var(--primary-600)] flex items-center justify-center text-white shadow-[var(--shadow-brand)] shrink-0">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-[18px] h-[18px]">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className="w-[18px] h-[18px]"
+                >
                   <path d="M22 2 11 13" />
                   <path d="M22 2 15 22l-4-9-9-4 20-7z" />
                 </svg>
               </div>
               <div>
-                <h4 className="m-0 text-[16px] font-extrabold text-[var(--text-900)] tracking-[-0.01em]">질문 보내기</h4>
-                <p className="m-0 text-[12.5px] text-[var(--text-500)]">이 유저에게 익명으로 질문을 전달합니다.</p>
+                <h4 className="m-0 text-[16px] font-extrabold text-[var(--text-900)] tracking-[-0.01em]">
+                  질문 보내기
+                </h4>
+                <p className="m-0 text-[12.5px] text-[var(--text-500)]">
+                  이 유저에게 익명으로 질문을 전달합니다.
+                </p>
               </div>
             </div>
 
@@ -133,8 +182,10 @@ export default function QBoxPage() {
               placeholder="무엇이든 물어보세요. 구체적으로 작성할수록 답변 품질이 올라가요."
               className="w-full min-h-[140px] p-[14px_16px] resize-y bg-[var(--surface)] border border-[var(--border-2)] rounded-[var(--r-md)] text-[14px] leading-[1.6] text-[var(--text-900)] outline-none placeholder-[var(--text-400)] transition-all focus:border-[var(--primary-500)] focus:ring-[4px] focus:ring-[var(--primary-50)]"
             />
-            
-            <div className={`flex justify-between items-center mt-[10px] text-[12px] font-semibold ${isOverLimit ? 'text-[var(--danger)]' : 'text-[var(--text-500)]'}`}>
+
+            <div
+              className={`flex justify-between items-center mt-[10px] text-[12px] font-semibold ${isOverLimit ? 'text-[var(--danger)]' : 'text-[var(--text-500)]'}`}
+            >
               <span>💡 욕설·개인정보는 자동 필터링됩니다.</span>
               <span>{qText.length} / 500</span>
             </div>
@@ -152,13 +203,21 @@ export default function QBoxPage() {
                 }`}
               >
                 {isAnon && (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" className="w-[12px] h-[12px]">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="3"
+                    className="w-[12px] h-[12px]"
+                  >
                     <path d="M5 13l4 4L19 7" />
                   </svg>
                 )}
               </div>
               <div className="flex flex-col cursor-pointer">
-                <span className="text-[13px] font-bold text-[var(--primary-700)]">익명으로 보내기</span>
+                <span className="text-[13px] font-bold text-[var(--primary-700)]">
+                  익명으로 보내기
+                </span>
                 <span className="text-[11.5px] font-medium text-[var(--primary-600)] mt-[2px]">
                   발신자 정보(IP·계정)는 서버에 저장하지 않아요.
                 </span>
@@ -166,7 +225,13 @@ export default function QBoxPage() {
             </div>
 
             <Button variant="primary" className="w-full !h-[48px]">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-[16px] h-[16px]">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                className="w-[16px] h-[16px]"
+              >
                 <path d="M22 2 11 13" />
                 <path d="M22 2 15 22l-4-9-9-4 20-7z" />
               </svg>
@@ -189,7 +254,11 @@ export default function QBoxPage() {
                 </p>
               </div>
               <div className="text-[13px] font-semibold text-[var(--text-500)]">
-                총 <strong className="text-[14px] font-extrabold text-[var(--text-900)]">48</strong>개의 답변
+                총{' '}
+                <strong className="text-[14px] font-extrabold text-[var(--text-900)]">
+                  48
+                </strong>
+                개의 답변
               </div>
             </div>
           </div>
@@ -212,7 +281,7 @@ export default function QBoxPage() {
                     {item.a}
                   </p>
                 </div>
-                
+
                 <div className="flex flex-col items-end gap-[6px] min-w-[80px]">
                   <span className="inline-flex items-center gap-[4px] h-[24px] px-[10px] rounded-[var(--r-full)] text-[11.5px] font-bold bg-[#22C29A]/10 text-[#0E8C68]">
                     ● 답변 완료
@@ -231,7 +300,6 @@ export default function QBoxPage() {
             </Button>
           </div>
         </section>
-
       </div>
     </main>
   );

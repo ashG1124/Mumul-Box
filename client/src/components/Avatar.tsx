@@ -6,17 +6,20 @@ interface AvatarProps {
   className?: string;
 }
 
-export const Avatar: React.FC<AvatarProps> = ({ hasImg = false, size = 44, className = '' }) => {  
+export const Avatar: React.FC<AvatarProps> = ({
+  hasImg = false,
+  size = 44,
+  className = '',
+}) => {
   return (
     <div
       style={{ width: `${size}px`, height: `${size}px` }}
       className={`rounded-full shrink-0 flex items-center justify-center
         ${
-        hasImg
-          ? 'bg-gradient-to-br from-[#FFB6E1] to-[var(--primary-300)]'
-          : 'bg-gradient-to-br from-[var(--primary-300)] to-[var(--primary-500)]'
-      } ${className}`.trim()}
-    >
-    </div>
+          hasImg
+            ? 'bg-gradient-to-br from-[#FFB6E1] to-[var(--primary-300)]'
+            : 'bg-gradient-to-br from-[var(--primary-300)] to-[var(--primary-500)]'
+        } ${className}`.trim()}
+    ></div>
   );
 };

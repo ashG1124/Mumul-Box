@@ -25,9 +25,19 @@ export const Gnb: React.FC<GnbProps> = ({
   questionCount = 0,
   hasNotification = false,
   avatarHasImg = false,
-  questionBoxButton = { variant: 'outline', size: 'md', pill: true, href: '/inbox' },
+  questionBoxButton = {
+    variant: 'outline',
+    size: 'md',
+    pill: true,
+    href: '/inbox',
+  },
   loginButton = { variant: 'outline', size: 'md', pill: true, href: '/login' },
-  signUpButton = { variant: 'primary', size: 'md', pill: true, href: '/signup' },
+  signUpButton = {
+    variant: 'primary',
+    size: 'md',
+    pill: true,
+    href: '/signup',
+  },
 }) => {
   return (
     <header className="h-[80px] bg-white/70 backdrop-blur-[20px] border-b border-[var(--border-1)] sticky top-0 z-50 w-full min-w-[1440px]">
@@ -81,7 +91,9 @@ export const Gnb: React.FC<GnbProps> = ({
           </svg>
           <input
             type="text"
-            placeholder={isLoggedIn ? "닉네임으로 유저 찾기" : "닉네임으로 질문함 찾기"}            
+            placeholder={
+              isLoggedIn ? '닉네임으로 유저 찾기' : '닉네임으로 질문함 찾기'
+            }
             className="flex-1 border-0 outline-none bg-transparent text-[14px] text-[var(--text-500)] placeholder-[var(--text-400)] font-normal"
           />
         </div>
@@ -135,9 +147,9 @@ export const Gnb: React.FC<GnbProps> = ({
 
               {/* 마이페이지 아바타 */}
               <a href="/mypage" aria-label="마이페이지">
-                <Avatar 
-                  hasImg={avatarHasImg} 
-                  size={42} 
+                <Avatar
+                  hasImg={avatarHasImg}
+                  size={42}
                   className="relative cursor-pointer transition-transform duration-150 ease-out hover:scale-[1.05] shadow-[var(--shadow-sm)] border-2 border-white after:content-[''] after:absolute after:inset-0 after:rounded-full after:border-[1.5px] after:border-[var(--border-2)] after:pointer-events-none"
                 />
               </a>
@@ -164,8 +176,12 @@ export const Gnb: React.FC<GnbProps> = ({
             </div>
           ) : (
             <div className="flex items-center gap-[10px]">
-              <Button {...loginButton} className="!h-[42px]">로그인</Button>
-              <Button {...signUpButton} className="!h-[42px]">회원가입</Button>
+              <Button {...loginButton} className="!h-[42px]">
+                로그인
+              </Button>
+              <Button {...signUpButton} className="!h-[42px]">
+                회원가입
+              </Button>
             </div>
           )}
         </div>
