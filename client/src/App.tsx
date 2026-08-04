@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Gnb } from './components/GNB.tsx';
+import { Gnb } from '@/components/Gnb';
 import HomePage from '@/pages/HomePage';
 import QBoxPage from '@/pages/QBoxPage';
 import InboxPage from '@/pages/InboxPage';
 import MyPage from '@/pages/MyPage';
 import SearchPage from '@/pages/SearchPage';
-import AnswersPage from '@/pages/AnswersPage.tsx';
+import AnswersPage from '@/pages/AnswersPage';
 
 // 라우트 목록 — 페이지 추가 시 여기에 <Route> 추가
 export default function App() {
@@ -14,16 +14,16 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
-    <div 
+    <div
       className="min-h-screen text-[var(--text-900)]"
       style={{
         background: `radial-gradient(ellipse 60% 50% at 20% 0%, #EEE4FF 0%, transparent 60%), 
                      radial-gradient(ellipse 50% 40% at 90% 10%, #FFD8F2 0%, transparent 60%), 
-                     var(--bg)`
+                     var(--bg)`,
       }}
     >
-      <Gnb 
-        isLoggedIn={isLoggedIn} 
+      <Gnb
+        isLoggedIn={isLoggedIn}
         questionCount={3}
         hasNotification={true}
         avatarHasImg={true}
