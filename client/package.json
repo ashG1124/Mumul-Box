@@ -12,8 +12,9 @@
     "format:check": "prettier --check .",
     "check": "pnpm lint && pnpm format:check",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "cd .. && husky client/.husky"
   },
+  "packageManager": "pnpm@11.5.0",
   "dependencies": {
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
