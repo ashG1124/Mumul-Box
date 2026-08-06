@@ -1,4 +1,10 @@
 import React from 'react';
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 import { Avatar } from './Avatar';
 import { Button } from './Button';
 import type { ButtonVariant, ButtonSize } from './Button';
@@ -7,7 +13,7 @@ interface ButtonConfig {
   variant?: ButtonVariant;
   size?: ButtonSize;
   pill?: boolean;
-  href?: string;
+  to?: string;
 }
 
 interface GnbProps {
@@ -29,22 +35,38 @@ export const Gnb: React.FC<GnbProps> = ({
     variant: 'outline',
     size: 'md',
     pill: true,
-    href: '/inbox',
+    to: '/inbox',
   },
-  loginButton = { variant: 'outline', size: 'md', pill: true, href: '/login' },
+  loginButton = { variant: 'outline', size: 'md', pill: true, to: '/login' },
   signUpButton = {
     variant: 'primary',
     size: 'md',
     pill: true,
-    href: '/signup',
+    to: '/signup',
   },
 }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+
+  // 검색 페이지에 있을 때만 URL의 검색어를 인풋에 채워준다.
+  // 인풋은 비제어로 두고 key를 검색어로 걸어, URL이 바뀌면 자연스럽게 다시 채워지게 한다.
+  const currentQuery =
+    location.pathname === '/search' ? (searchParams.get('q') ?? '') : '';
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const q = String(new FormData(e.currentTarget).get('q') ?? '').trim();
+    if (!q) return;
+    navigate(`/search?q=${encodeURIComponent(q)}`);
+  };
+
   return (
     <header className="h-[80px] bg-white/70 backdrop-blur-[20px] border-b border-[var(--border-1)] sticky top-0 z-50 w-full min-w-[1440px]">
       <div className="max-w-[1280px] mx-auto h-full flex items-center gap-[24px] px-[32px]">
         {/* 로고 영역 */}
-        <a
-          href="/"
+        <Link
+          to="/"
           className="flex items-center gap-[10px] shrink-0 font-extrabold text-[19px] tracking-[-0.02em] text-[var(--text-900)] select-none"
         >
           <div className="w-[34px] h-[34px] transform -rotate-[8deg] shrink-0">
@@ -73,30 +95,41 @@ export const Gnb: React.FC<GnbProps> = ({
             </svg>
           </div>
           MuMul Box
-        </a>
+        </Link>
 
-        {/* 유저 검색바 */}
-        <div className="flex items-center gap-[10px] flex-[0_0_280px] h-[42px] px-[18px] bg-white border border-[var(--border-2)] rounded-full text-[14px]">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="var(--text-400)"
-            strokeWidth="2.5"
-            className="shrink-0"
+        {/* 유저 검색바 — Enter 시 /search?q= 로 이동 */}
+        <form
+          onSubmit={handleSearch}
+          className="flex items-center gap-[10px] flex-[0_0_280px] h-[42px] px-[18px] bg-white border border-[var(--border-2)] rounded-full text-[14px] focus-within:border-[var(--primary-400)] transition-colors"
+        >
+          <button
+            type="submit"
+            aria-label="검색"
+            className="shrink-0 flex items-center cursor-pointer"
           >
-            <circle cx="11" cy="11" r="7" />
-            <path d="m20 20-3.5-3.5" />
-          </svg>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="var(--text-400)"
+              strokeWidth="2.5"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <path d="m20 20-3.5-3.5" />
+            </svg>
+          </button>
           <input
+            key={currentQuery}
             type="text"
+            name="q"
+            defaultValue={currentQuery}
             placeholder={
               isLoggedIn ? '닉네임으로 유저 찾기' : '닉네임으로 질문함 찾기'
             }
-            className="flex-1 border-0 outline-none bg-transparent text-[14px] text-[var(--text-500)] placeholder-[var(--text-400)] font-normal"
+            className="flex-1 border-0 outline-none bg-transparent text-[14px] text-[var(--text-900)] placeholder-[var(--text-400)] font-normal"
           />
-        </div>
+        </form>
 
         {/* 여백 주머니 */}
         <div className="flex-1" />
@@ -129,6 +162,8 @@ export const Gnb: React.FC<GnbProps> = ({
               <Button
                 variant="outline"
                 pill
+                to="/notifications"
+                aria-label="알림"
                 className="!w-[42px] !h-[42px] !px-0 relative"
               >
                 <svg
@@ -146,20 +181,20 @@ export const Gnb: React.FC<GnbProps> = ({
               </Button>
 
               {/* 마이페이지 아바타 */}
-              <a href="/mypage" aria-label="마이페이지">
+              <Link to="/mypage" aria-label="마이페이지">
                 <Avatar
                   hasImg={avatarHasImg}
                   size={42}
                   className="relative cursor-pointer transition-transform duration-150 ease-out hover:scale-[1.05] shadow-[var(--shadow-sm)] border-2 border-white after:content-[''] after:absolute after:inset-0 after:rounded-full after:border-[1.5px] after:border-[var(--border-2)] after:pointer-events-none"
                 />
-              </a>
+              </Link>
 
               {/* 로그아웃 버튼 (HTML 원본에 맞춰서 높이를 42px로 강제 조정) */}
               <Button
                 variant="ghost"
                 size="sm"
                 pill
-                href="/" // HTML의 01-home.html 이동 반영
+                to="/" // HTML의 01-home.html 이동 반영
                 className="!h-[42px] !text-[var(--text-400)] hover:!text-[var(--danger)] hover:!bg-transparent"
               >
                 <svg

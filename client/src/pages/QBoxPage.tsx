@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Avatar } from '../components/Avatar';
 import { Button } from '../components/Button';
 
@@ -52,12 +53,12 @@ export default function QBoxPage() {
           1. Breadcrumb (경로 안내)
           ============================================================ */}
       <div className="flex items-center gap-[10px] text-[13px] font-semibold text-[var(--text-500)] mb-[24px]">
-        <a
-          href="/"
+        <Link
+          to="/"
           className="hover:text-[var(--primary-600)] transition-colors"
         >
           홈
-        </a>
+        </Link>
         <svg
           viewBox="0 0 24 24"
           fill="none"
@@ -67,12 +68,12 @@ export default function QBoxPage() {
         >
           <path d="m9 18 6-6-6-6" />
         </svg>
-        <a
-          href="/search"
+        <Link
+          to="/search"
           className="hover:text-[var(--primary-600)] transition-colors"
         >
           유저 검색
-        </a>
+        </Link>
         <svg
           viewBox="0 0 24 24"
           fill="none"
@@ -295,7 +296,7 @@ export default function QBoxPage() {
           </div>
 
           <div className="flex justify-center mt-[22px]">
-            <Button variant="outline" href="/answers">
+            <Button variant="outline" to="/answers">
               전체 답변 48개 보기
             </Button>
           </div>

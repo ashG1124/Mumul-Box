@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { Gnb } from '@/components/Gnb';
 import HomePage from '@/pages/HomePage';
 import QBoxPage from '@/pages/QBoxPage';
@@ -7,6 +7,8 @@ import InboxPage from '@/pages/InboxPage';
 import MyPage from '@/pages/MyPage';
 import SearchPage from '@/pages/SearchPage';
 import AnswersPage from '@/pages/AnswersPage';
+import NotificationsPage from '@/pages/NotificationsPage';
+import FeedPage from '@/pages/FeedPage';
 
 // 라우트 목록 — 페이지 추가 시 여기에 <Route> 추가
 export default function App() {
@@ -49,6 +51,10 @@ export default function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/answers" element={<AnswersPage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/feed" element={<FeedPage />} />
+        {/* 정의되지 않은 경로는 홈으로 되돌린다 */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
   );

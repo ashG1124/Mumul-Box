@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Button } from '../components/Button';
+import { Select, type SelectOption } from '../components/Select';
 
 // =====================================================================
 // [정적 데이터]
@@ -29,21 +30,21 @@ const ANSWERED_DATA = [
     text: '이직 준비, 회사 다니면서 어떻게 시간 냈어요?',
     ans: 'A. 평일 아침 1시간만 고정으로 썼어요. 퇴근 후엔 체력이 바닥이라 차라리 일찍 자고 새벽에 했습니다. 주말은 몰아서 하지 말고 2시간만.',
     date: '2026-05-12',
-    statusText: '공개',
+    statusText: '전체 공개',
   },
   {
     id: 2,
     text: '번아웃 왔을 때 어떻게 회복했는지 궁금해요',
     ans: "A. 가장 효과 본 건 '아무것도 안 하는 시간'을 일정에 넣는 거였어요. 죄책감 없이 쉬는 연습이 필요했습니다.",
     date: '2026-05-10',
-    statusText: '공개',
+    statusText: '전체 공개',
   },
   {
     id: 3,
     text: '포트폴리오에 사이드 프로젝트 꼭 필요한가요?',
     ans: 'A. 필수는 아니지만, 실무 경험이 적을수록 강력합니다. 완성도 높은 1개가 어설픈 3개보다 훨씬 낫습니다.',
     date: '2026-05-08',
-    statusText: '링크 공개',
+    statusText: '비공개',
   },
 ];
 
@@ -81,12 +82,27 @@ const REPORTED_DATA = [
   },
 ];
 
+// 답변 공개 범위 옵션 (전체 공개 / 비공개 2가지)
+const VISIBILITY_OPTIONS: SelectOption[] = [
+  {
+    value: 'public',
+    label: '전체 공개',
+    icon: '🌐',
+    desc: '피드와 내 질문함 히스토리에 노출됩니다.',
+  },
+  {
+    value: 'private',
+    label: '비공개',
+    icon: '🔒',
+    desc: '질문자와 나만 볼 수 있어요.',
+  },
+];
+
 // 거절 사유 옵션
 const REJECT_REASONS = [
-  { id: 'abuse', icon: '🚫', label: '욕설 / 비속어' },
+  { id: 'abuse', icon: '🚫', label: '욕설 / 비속어 / 혐오 / 차별 표현' },
   { id: 'spam', icon: '📢', label: '스팸 / 광고·홍보' },
   { id: 'privacy', icon: '🔒', label: '개인정보 노출' },
-  { id: 'hate', icon: '😡', label: '혐오 / 차별 표현' },
   { id: 'decline', icon: '🙅', label: '단순 거절 — 답변하고 싶지 않아요' },
   { id: 'etc', icon: '✏️', label: '기타 사유' },
 ];
@@ -98,6 +114,8 @@ export default function InboxPage() {
   const [selectedPendingId, setSelectedPendingId] = useState<number>(
     PENDING_DATA[0].id,
   );
+  // 공개 범위: 기본값 전체 공개
+  const [visibility, setVisibility] = useState('public');
 
   // 모달 상태 관리
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
@@ -117,94 +135,11 @@ export default function InboxPage() {
 
   return (
     <>
-      <main className="max-w-[1280px] mx-auto pt-[40px] px-[32px] pb-[120px] grid grid-cols-[240px_1fr] gap-[40px] items-start">
+      <main className="max-w-[1280px] mx-auto pt-[40px] px-[32px] pb-[120px]">
         {/* ============================================================
-            1. 사이드바 (내비게이션)
+            1. 메인 콘텐츠 영역 (전체 폭)
             ============================================================ */}
-        <aside className="sticky top-[104px]">
-          <div className="flex items-center gap-[10px] px-[12px] pb-[16px] mb-[8px] border-b border-[var(--border-1)]">
-            <div className="w-[36px] h-[36px] rounded-[12px] bg-gradient-to-br from-[var(--primary-400)] to-[var(--primary-600)] flex items-center justify-center text-white shadow-[var(--shadow-brand)]">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                className="w-[18px] h-[18px]"
-              >
-                <path d="M22 12h-6l-2 3h-4l-2-3H2" />
-                <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
-              </svg>
-            </div>
-            <h2 className="m-0 text-[18px] font-extrabold text-[var(--text-900)] tracking-[-0.01em]">
-              내 질문함
-            </h2>
-          </div>
-
-          <nav className="flex flex-col gap-[2px] pt-[8px]">
-            <a
-              href="#"
-              className="flex items-center gap-[10px] h-[44px] px-[14px] rounded-[var(--r-md)] text-[14px] font-bold bg-[var(--primary-50)] text-[var(--primary-700)] transition-colors"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                className="w-[18px] h-[18px]"
-              >
-                <path d="M22 12h-6l-2 3h-4l-2-3H2" />
-                <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
-              </svg>
-              전체 보관함
-              <span className="ml-auto min-w-[22px] h-[22px] px-[7px] rounded-[var(--r-full)] bg-[var(--primary-500)] text-white text-[11px] font-extrabold flex items-center justify-center">
-                42
-              </span>
-            </a>
-            <a
-              href="#"
-              className="flex items-center gap-[10px] h-[44px] px-[14px] rounded-[var(--r-md)] text-[14px] font-semibold text-[var(--text-500)] hover:bg-[var(--primary-50)] hover:text-[var(--primary-700)] transition-colors group"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                className="w-[18px] h-[18px]"
-              >
-                <path d="M12 8v4" />
-                <path d="M12 16h.01" />
-                <circle cx="12" cy="12" r="10" />
-              </svg>
-              미답변
-              <span className="ml-auto min-w-[22px] h-[22px] px-[7px] rounded-[var(--r-full)] bg-[var(--primary-100)] text-[var(--primary-700)] text-[11px] font-extrabold flex items-center justify-center group-hover:bg-[var(--primary-200)]">
-                8
-              </span>
-            </a>
-            <a
-              href="#"
-              className="flex items-center gap-[10px] h-[44px] px-[14px] rounded-[var(--r-md)] text-[14px] font-semibold text-[var(--text-500)] hover:bg-[var(--primary-50)] hover:text-[var(--primary-700)] transition-colors group"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                className="w-[18px] h-[18px]"
-              >
-                <path d="M20 6 9 17l-5-5" />
-              </svg>
-              답변 완료
-              <span className="ml-auto min-w-[22px] h-[22px] px-[7px] rounded-[var(--r-full)] bg-[var(--primary-100)] text-[var(--primary-700)] text-[11px] font-extrabold flex items-center justify-center group-hover:bg-[var(--primary-200)]">
-                34
-              </span>
-            </a>
-          </nav>
-        </aside>
-
-        {/* ============================================================
-            2. 메인 콘텐츠 영역
-            ============================================================ */}
-        <section>
+        <section className="w-full">
           {/* 상단 헤더 박스 */}
           <div className="bg-gradient-to-br from-[#F4F0FE] to-[#FFE4F3] border border-[var(--border-1)] rounded-[var(--r-lg)] p-[28px_32px] mb-[24px] flex items-center gap-[24px]">
             <div className="w-[64px] h-[64px] rounded-[18px] bg-[var(--primary-500)] flex items-center justify-center shadow-[var(--shadow-brand)] shrink-0 text-white">
@@ -366,7 +301,7 @@ export default function InboxPage() {
                   ✍️ 빠른 답변 에디터
                 </h3>
                 <p className="m-0 mb-[20px] text-[13px] text-[var(--text-500)]">
-                  왼쪽에서 카드를 선택하면 자동으로 미리보기가 채워집니다. 바로
+                  위에서 카드를 선택하면 자동으로 미리보기가 채워집니다. 바로
                   답변을 등록하세요.
                 </p>
 
@@ -386,11 +321,11 @@ export default function InboxPage() {
                     <label className="text-[13px] font-bold text-[var(--text-900)]">
                       공개 범위
                     </label>
-                    <select className="w-full h-[46px] px-[16px] bg-white border border-[var(--border-2)] rounded-[var(--r-md)] text-[14px] text-[var(--text-900)] outline-none focus:border-[var(--primary-500)] focus:ring-[4px] focus:ring-[var(--primary-50)] transition-colors">
-                      <option>전체 공개 — 피드에 노출</option>
-                      <option>링크 보유자만 — 비공개 페이지</option>
-                      <option>비공개 저장만</option>
-                    </select>
+                    <Select
+                      options={VISIBILITY_OPTIONS}
+                      value={visibility}
+                      onChange={setVisibility}
+                    />
                   </div>
                   <div className="flex flex-col gap-[6px] col-span-2">
                     <label className="text-[13px] font-bold text-[var(--text-900)]">
@@ -474,7 +409,7 @@ export default function InboxPage() {
                     </div>
                     <div className="flex flex-col items-end gap-[6px] min-w-[96px]">
                       <span
-                        className={`inline-flex items-center gap-[4px] h-[24px] px-[10px] rounded-[var(--r-full)] text-[11.5px] font-bold ${item.statusText === '공개' ? 'bg-[#22C29A]/10 text-[#0E8C68]' : 'bg-[var(--surface-2)] text-[var(--text-500)]'}`}
+                        className={`inline-flex items-center gap-[4px] h-[24px] px-[10px] rounded-[var(--r-full)] text-[11.5px] font-bold ${item.statusText === '전체 공개' ? 'bg-[#22C29A]/10 text-[#0E8C68]' : 'bg-[var(--surface-2)] text-[var(--text-500)]'}`}
                       >
                         ● {item.statusText}
                       </span>
@@ -573,17 +508,17 @@ export default function InboxPage() {
       </main>
 
       {/* ============================================================
-          3. 답변 거절 & 신고 모달
+          2. 답변 거절 & 신고 모달
           ============================================================ */}
       <div
-        className={`fixed inset-0 z-[100] bg-[#0F0F1A]/45 backdrop-blur-[3px] flex items-center justify-center p-[24px] transition-opacity duration-200 ${isRejectModalOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+        className={`fixed inset-0 z-[100] bg-[#0F0F1A]/45 backdrop-blur-[3px] flex items-center justify-center p-[16px] sm:p-[24px] transition-opacity duration-200 ${isRejectModalOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
         onClick={closeRejectModal}
       >
         <div
-          className={`bg-[var(--surface)] rounded-[var(--r-xl)] w-full max-w-[480px] shadow-[0_24px_60px_rgba(15,15,26,0.28)] overflow-hidden transition-transform duration-200 ${isRejectModalOpen ? 'scale-100 translate-y-0' : 'scale-95 translate-y-[12px]'}`}
+          className={`bg-[var(--surface)] rounded-[var(--r-xl)] w-full max-w-[480px] max-h-[calc(100dvh-32px)] sm:max-h-[calc(100dvh-48px)] flex flex-col shadow-[0_24px_60px_rgba(15,15,26,0.28)] overflow-hidden transition-transform duration-200 ${isRejectModalOpen ? 'scale-100 translate-y-0' : 'scale-95 translate-y-[12px]'}`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="p-[24px_26px_0] relative">
+          <div className="shrink-0 p-[20px_24px_0] sm:p-[24px_26px_0] relative">
             <button
               onClick={closeRejectModal}
               className="absolute top-[18px] right-[18px] w-[32px] h-[32px] rounded-[8px] flex items-center justify-center text-[var(--text-400)] hover:bg-[var(--surface-2)] hover:text-[var(--text-900)] transition-colors"
@@ -619,7 +554,7 @@ export default function InboxPage() {
             </p>
           </div>
 
-          <div className="p-[20px_26px]">
+          <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-[16px_24px] sm:p-[20px_26px]">
             <div className="p-[12px_14px] bg-[var(--surface-2)] border-l-[3px] border-[var(--border-3)] rounded-[var(--r-md)] text-[13px] text-[var(--text-900)] leading-[1.5] mb-[18px]">
               {rejectTargetText}
             </div>
@@ -658,7 +593,7 @@ export default function InboxPage() {
             />
           </div>
 
-          <div className="p-[16px_26px_22px] flex justify-end gap-[10px] border-t border-[var(--border-1)]">
+          <div className="shrink-0 p-[14px_24px_18px] sm:p-[16px_26px_22px] flex justify-end gap-[10px] border-t border-[var(--border-1)] bg-[var(--surface)]">
             <Button variant="outline" onClick={closeRejectModal}>
               취소
             </Button>
