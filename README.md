@@ -60,13 +60,13 @@
 
 ```bash
 # 전체 서비스 빌드 및 실행
-docker-compose -f docker/docker-compose.yml up --build
+docker-compose up --build
 
 # 백그라운드 실행
-docker-compose -f docker/docker-compose.yml up -d
+docker-compose up -d
 
 # 서비스 종료
-docker-compose -f docker/docker-compose.yml down
+docker-compose down
 
 ```
 
@@ -74,8 +74,8 @@ docker-compose -f docker/docker-compose.yml down
 
 특정 파트만 개별적으로 수정하고 실행할 경우:
 
-* **FE**: `cd frontend && pnpm install &&  pnpm run dev`
-* **BE**: `cd backend && ./gradlew bootRun`
+* **FE**: `cd client && pnpm install && pnpm run dev`
+* **BE**: `cd server && ./gradlew bootRun`
 
 ---
 
