@@ -5,7 +5,7 @@
 ---
 
 ## ⚠️ Notice
-* 모든 작업 하기 전에 `git pull dev` 꼭 합시다.
+* 모든 작업 하기 전에 `git pull origin dev` 꼭 합시다.
 * 제발 디렉토리 경로 잘 보세요. 특히 처음에 깃 클론할 때 파일 경로 잘 봐주세요. (경로랑 터미널 안 꼬이게)
 * 머지할 때 base: dev 인 거 확인해주세요. (제발 main에 머지하지 말아주세요.)
 
@@ -60,13 +60,13 @@
 
 ```bash
 # 전체 서비스 빌드 및 실행
-docker-compose -f docker/docker-compose.yml up --build
+docker-compose up --build
 
 # 백그라운드 실행
-docker-compose -f docker/docker-compose.yml up -d
+docker-compose up -d
 
 # 서비스 종료
-docker-compose -f docker/docker-compose.yml down
+docker-compose down
 
 ```
 
@@ -74,8 +74,8 @@ docker-compose -f docker/docker-compose.yml down
 
 특정 파트만 개별적으로 수정하고 실행할 경우:
 
-* **FE**: `cd frontend && pnpm install &&  pnpm run dev`
-* **BE**: `cd backend && ./gradlew bootRun`
+* **FE**: `cd client && pnpm install && pnpm run dev`
+* **BE**: `cd server && ./gradlew bootRun`
 
 ---
 

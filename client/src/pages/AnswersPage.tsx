@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Avatar } from '../components/Avatar';
 import { Button } from '../components/Button';
 
@@ -74,12 +75,12 @@ export default function AnswersPage() {
           1. Breadcrumb (경로 안내)
           ============================================================ */}
       <div className="flex items-center gap-[10px] text-[13px] font-semibold text-[var(--text-500)] mb-[24px]">
-        <a
-          href="/"
+        <Link
+          to="/"
           className="hover:text-[var(--primary-600)] transition-colors"
         >
           홈
-        </a>
+        </Link>
         <svg
           viewBox="0 0 24 24"
           fill="none"
@@ -89,12 +90,12 @@ export default function AnswersPage() {
         >
           <path d="m9 18 6-6-6-6" />
         </svg>
-        <a
-          href="/search"
+        <Link
+          to="/search"
           className="hover:text-[var(--primary-600)] transition-colors"
         >
           유저 검색
-        </a>
+        </Link>
         <svg
           viewBox="0 0 24 24"
           fill="none"
@@ -104,12 +105,12 @@ export default function AnswersPage() {
         >
           <path d="m9 18 6-6-6-6" />
         </svg>
-        <a
-          href="/qbox"
+        <Link
+          to="/qbox"
           className="hover:text-[var(--primary-600)] transition-colors"
         >
           @traveler-J 의 질문함
-        </a>
+        </Link>
         <svg
           viewBox="0 0 24 24"
           fill="none"
@@ -152,7 +153,7 @@ export default function AnswersPage() {
           </p>
         </div>
 
-        <Button variant="primary" href="/qbox" className="!h-[44px]">
+        <Button variant="primary" to="/qbox" className="!h-[44px]">
           <svg
             viewBox="0 0 24 24"
             fill="none"

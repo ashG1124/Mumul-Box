@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // 1. 외부에서 조종할 수 있는 옵션(Props) 정의.
 export type ButtonVariant = 'primary' | 'outline' | 'dark' | 'ghost';
@@ -9,9 +10,11 @@ interface ButtonProps {
   variant?: ButtonVariant; // 4가지 디자인 스타일
   size?: ButtonSize; // 3가지 크기 스케일
   pill?: boolean; // true면 rounded-full (GNB 등 캡슐형 버튼)
-  href?: string; // 있으면 <a> 태그로 렌더링
+  to?: string; // 앱 내부 경로 — <Link>로 렌더링 (새로고침 없이 이동)
+  href?: string; // 외부 링크 — <a> 태그로 렌더링
   className?: string;
   onClick?: () => void;
+  'aria-label'?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -19,9 +22,11 @@ export const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
   size = 'md',
   pill = false,
+  to,
   href,
   className = '',
   onClick,
+  'aria-label': ariaLabel,
 }) => {
   // 2. 글자 두께, 정렬, 마우스 커서, 애니메이션 등 모든 버튼이 공유하는 기본 뼈대 스타일.
   const baseStyle =
@@ -53,16 +58,23 @@ export const Button: React.FC<ButtonProps> = ({
   const cls =
     `${baseStyle} ${sizeStyles[size]} ${variantStyles[variant]} ${radiusOverride} ${className}`.trim();
 
-  // href가 있으면 <a>, 없으면 <button>
+  // 5. to는 앱 내부 이동(Link), href는 외부 링크(a), 둘 다 없으면 <button>
+  if (to) {
+    return (
+      <Link to={to} className={cls} onClick={onClick} aria-label={ariaLabel}>
+        {children}
+      </Link>
+    );
+  }
   if (href) {
     return (
-      <a href={href} className={cls}>
+      <a href={href} className={cls} onClick={onClick} aria-label={ariaLabel}>
         {children}
       </a>
     );
   }
   return (
-    <button className={cls} onClick={onClick}>
+    <button className={cls} onClick={onClick} aria-label={ariaLabel}>
       {children}
     </button>
   );

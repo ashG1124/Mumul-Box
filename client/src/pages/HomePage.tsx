@@ -1,51 +1,26 @@
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Avatar } from '../components/Avatar';
+import { FEED_ITEMS } from '@/features/answer';
+
 interface HomePageProps {
   isLoggedIn?: boolean;
 }
 
-// =====================================================================
-// [정적 데이터] 최신 답변 피드
-// =====================================================================
-const FEED_DATA = [
-  {
-    id: 1,
-    q: 'Q. 가장 좋아하는 여행지는?',
-    from: '- 익명',
-    a: 'A. 최근 다녀온 제주도 김녕 해변이 진짜 좋았어요. 새벽에 가서 일출 본 게 인생샷이었어요. 🌊',
-    nickname: '여행유튜버J',
-    date: '2026.05.12',
-    avatarGradient: 'from-[var(--primary-300)] to-[var(--primary-500)]',
-  },
-  {
-    id: 2,
-    q: 'Q. 디자인 입문은 어떻게 시작?',
-    from: '- 익명',
-    a: 'A. 모방부터 시작하세요. 좋아하는 화면을 픽셀 단위로 따라 그려보면 감각이 빠르게 잡혀요.',
-    nickname: '디자인공방',
-    date: '2026.05.12',
-    avatarGradient: 'from-[#FFB6E1] to-[var(--primary-300)]',
-  },
-  {
-    id: 3,
-    q: 'Q. 요즘 자주 듣는 노래는?',
-    from: '- 익명',
-    a: 'A. 최근엔 NewJeans "Supernatural" 무한 재생 중이에요. 출근길에 듣기 좋더라고요 🎵',
-    nickname: '크리에이터닉',
-    date: '2026.05.11',
-    avatarGradient: 'from-[var(--primary-400)] to-[var(--primary-600)]',
-  },
-  {
-    id: 4,
-    q: 'Q. 번아웃 어떻게 극복했어요?',
-    from: '- 익명',
-    a: 'A. 일단 24시간 모든 알림을 꺼봤어요. 그리고 가벼운 산책 30분을 매일 강제로 넣었습니다.',
-    nickname: '고민상담소',
-    date: '2026.05.11',
-    avatarGradient: 'from-[var(--info)] to-[var(--primary-500)]',
-  },
-];
+// 홈에는 최신 답변 4개만 노출하고, 전체 목록은 /feed 에서 보여준다.
+const HOME_FEED = FEED_ITEMS.slice(0, 4);
 
 export default function HomePage({ isLoggedIn = false }: HomePageProps) {
+  const navigate = useNavigate();
+
+  // GNB 검색바와 동일하게 검색어를 URL(?q=)에 실어 탐색 페이지로 넘긴다.
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const q = String(new FormData(e.currentTarget).get('q') ?? '').trim();
+    if (!q) return;
+    navigate(`/search?q=${encodeURIComponent(q)}`);
+  };
+
   return (
     <main className="w-full min-h-screen">
       {/* ============================================================
@@ -95,7 +70,10 @@ export default function HomePage({ isLoggedIn = false }: HomePageProps) {
             </div>
           )}
 
-          <form className="flex items-center gap-[10px] w-full max-w-[460px] h-[60px] pl-[24px] pr-[8px] bg-[var(--surface)] border border-[var(--border-2)] rounded-[var(--r-full)]">
+          <form
+            onSubmit={handleSearch}
+            className="flex items-center gap-[10px] w-full max-w-[460px] h-[60px] pl-[24px] pr-[8px] bg-[var(--surface)] border border-[var(--border-2)] rounded-[var(--r-full)] focus-within:border-[var(--primary-400)] transition-colors"
+          >
             <svg
               width="20"
               height="20"
@@ -186,16 +164,20 @@ export default function HomePage({ isLoggedIn = false }: HomePageProps) {
           <h2 className="text-[24px] font-extrabold tracking-[-0.02em] m-0 text-[var(--text-900)]">
             공개된 최신 답변 피드
           </h2>
-          <span className="text-[13px] text-[var(--primary-600)] font-semibold cursor-pointer after:content-['_→'] hover:text-[var(--primary-700)]">
+          <Link
+            to="/feed"
+            className="text-[13px] text-[var(--primary-600)] font-semibold cursor-pointer after:content-['_→'] hover:text-[var(--primary-700)]"
+          >
             더보기
-          </span>
+          </Link>
         </div>
 
         <div className="grid grid-cols-4 gap-[18px]">
-          {FEED_DATA.map((item) => (
-            <div
+          {HOME_FEED.map((item) => (
+            <Link
               key={item.id}
-              className="bg-[var(--surface)] rounded-[var(--r-lg)] p-[22px] border border-[var(--border-2)] transition-all duration-[180ms] ease-out hover:border-[var(--primary-400)] hover:-translate-y-[2px] cursor-pointer flex flex-col shadow-sm hover:shadow-[var(--shadow-md)]"
+              to="/qbox"
+              className="bg-[var(--surface)] rounded-[var(--r-lg)] p-[22px] border border-[var(--border-2)] transition-all duration-[180ms] ease-out hover:border-[var(--primary-400)] hover:-translate-y-[2px] flex flex-col shadow-sm hover:shadow-[var(--shadow-md)]"
             >
               <h3 className="text-[15px] font-extrabold text-[var(--text-900)] mb-[4px] tracking-[-0.01em] leading-[1.4] line-clamp-1">
                 {item.q}
@@ -216,7 +198,7 @@ export default function HomePage({ isLoggedIn = false }: HomePageProps) {
                 </span>
                 <span className="font-semibold">{item.date}</span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
