@@ -1,11 +1,18 @@
-# OS
+# 루트 전용 무시 규칙
+# client/, server/ 는 각자의 .gitignore 가 담당한다.
+# .gitignore 는 자기 디렉토리 하위에만 적용되므로 루트에 생기는 것들은 여기서 막는다.
+
+# 루트에서 패키지 매니저를 잘못 실행했을 때 생기는 것들
+node_modules/
+package-lock.json
+
+# 에디터 / OS
+.idea/
+.vscode/
 .DS_Store
 Thumbs.db
 
-# IDE
-.idea/
-.vscode/
-
-# 디자인 목업, 내부 문서 — git 추적 불필요
-.github/design/
-.github/docs/
+# 환경변수
+.env
+.env.local
+.env.*.local
