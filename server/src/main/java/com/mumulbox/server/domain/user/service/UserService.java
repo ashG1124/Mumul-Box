@@ -1,6 +1,8 @@
 package com.mumulbox.server.domain.user.service;
 
 import com.mumulbox.server.domain.user.dto.MyInfoResponse;
+import com.mumulbox.server.domain.user.dto.NotificationSettingRequest;
+import com.mumulbox.server.domain.user.dto.NotificationSettingResponse;
 import com.mumulbox.server.domain.user.dto.ProfileUpdateRequest;
 import com.mumulbox.server.domain.user.dto.ProfileUpdateResponse;
 import com.mumulbox.server.domain.user.dto.ShareLinkResponse;
@@ -112,5 +114,23 @@ public class UserService {
         String shareUrl = shareBaseUrl + "/" + newShareToken;
 
         return ShareLinkResponse.of(user.getUserId(), shareUrl);
+    }
+
+    /**
+     * 알림 설정 변경
+     */
+    @Transactional
+    public NotificationSettingResponse updateNotificationSetting(
+            String userId,
+            NotificationSettingRequest request
+    ) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        user.updateNotificationSetting(request.getIsEnabled());
+
+        log.info("알림 설정 변경 완료: {} → {}", userId, request.getIsEnabled());
+
+        return NotificationSettingResponse.of(user.getUserId(), user.getIsNoriEnabled());
     }
 }

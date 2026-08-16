@@ -3,6 +3,8 @@ package com.mumulbox.server.domain.user.controller;
 import com.mumulbox.server.domain.user.dto.AuthResponse;
 import com.mumulbox.server.domain.user.dto.LoginRequest;
 import com.mumulbox.server.domain.user.dto.MyInfoResponse;
+import com.mumulbox.server.domain.user.dto.NotificationSettingRequest;
+import com.mumulbox.server.domain.user.dto.NotificationSettingResponse;
 import com.mumulbox.server.domain.user.dto.ProfileUpdateRequest;
 import com.mumulbox.server.domain.user.dto.ProfileUpdateResponse;
 import com.mumulbox.server.domain.user.dto.ShareLinkResponse;
@@ -110,5 +112,20 @@ public class UserController {
         ShareLinkResponse response = userService.regenerateShareLink(principal.getUsername());
         return ResponseEntity
                 .ok(ApiResponse.ok("공유 링크가 재발급되었습니다.", response));
+    }
+
+    /**
+     * 알림 설정 변경
+     * PATCH /api/v1/me/settings/notifications
+     */
+    @PatchMapping("/me/settings/notifications")
+    public ResponseEntity<ApiResponse<NotificationSettingResponse>> updateNotificationSetting(
+            @AuthenticationPrincipal User principal,
+            @Valid @RequestBody NotificationSettingRequest request
+    ) {
+        NotificationSettingResponse response =
+                userService.updateNotificationSetting(principal.getUsername(), request);
+        return ResponseEntity
+                .ok(ApiResponse.ok("알림 설정이 변경되었습니다.", response));
     }
 }
